@@ -40,7 +40,7 @@ import com.mengmengyuan.core.user.service.UserInfoService;
  */
 @RestController
 @RequestMapping(path = "user", method = { RequestMethod.POST })
-public class UserLoginController extends BaseController {
+public class UserController extends BaseController {
     @Autowired
     UserInfoService userInfoService;
 
@@ -49,6 +49,12 @@ public class UserLoginController extends BaseController {
         return null;
     }
 
+    /**
+     * 
+     * login(用户登录接口)
+     * 
+     * 
+     */
     @RequestMapping("login")
     public ApiResponse login(HttpServletRequest request, HttpServletResponse response) {
         String loginname = request.getParameter("loginname");
@@ -107,6 +113,37 @@ public class UserLoginController extends BaseController {
         // 更新登录时间
         userInfoService.updateLoginTime(userId);
         return ApiResponse.successMessage(returnMap);
+
+    }
+
+    /**
+     * 
+     * changePassword(用户更改密码)
+     * 
+     * 
+     */
+    @RequestMapping("changePassword ")
+    public ApiResponse changePassword(HttpServletRequest request, HttpServletResponse response) {
+        String userId = request.getParameter("userId");
+        String accToken = request.getParameter("accToken");
+        String password4Change = request.getParameter("password");// 需要修改的密码
+        if (password4Change.length() < 6) {
+            return ApiResponse.failMessage(ReturnConstants.ERROR_PASSWORD_INVALID, "password is invalid");
+
+        }
+
+        boolean flag = userInfoService.checkAccToken(userId, accToken);
+        if (!flag) {
+            return ApiResponse.failMessage(ReturnConstants.ERROR_ACCTOKEN_INVALID, "accToken is invalid");
+        }
+        try {
+            userInfoService.changePassword(userId, password4Change);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return ApiResponse.failMessage("change password faild");
+        }
+
+        return ApiResponse.successMessage("change password success");
 
     }
 

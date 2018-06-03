@@ -137,4 +137,23 @@ public class UserInfoService {
                 System.currentTimeMillis());
     }
 
+    /**
+     * 
+     * changePassword(这里用一句话描述这个方法的作用)
+     * 
+     * 
+     * 
+     */
+    public int changePassword(String userId, String password4Change) {
+        UserInfo user = new UserInfo();
+        user.setId(userId);
+        user.setPassword(MD5Utils.MD5(password4Change));
+        int i = userDao.updatePassword(user);
+        if (i != 1) {
+            throw new RuntimeException("change password error:userId=" + userId + "&password=" + password4Change);
+        }
+        return i;
+
+    }
+
 }

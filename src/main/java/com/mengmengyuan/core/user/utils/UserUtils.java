@@ -33,9 +33,6 @@ public class UserUtils {
     // 用户hash存储的头像
     public static final String USER_HASH_IMAGE = "image";
 
-    // 用户hash存储的密码
-    public static final String USER_HASH_PASSWORD = "password";
-
     // 用户hash存储的昵称
     public static final String USER_HASH_NICK = "nickname";
 

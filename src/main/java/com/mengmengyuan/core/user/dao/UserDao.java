@@ -48,4 +48,12 @@ public interface UserDao extends BaseDao<UserInfo> {
      */
     public int updateNickname(UserInfo user);
 
+    /**
+     * 
+     * updatePassword(更新用户密码)
+     * 
+     * 
+     */
+    public int updatePassword(UserInfo user);
+
 }

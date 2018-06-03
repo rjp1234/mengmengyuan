@@ -31,4 +31,9 @@ public class ReturnConstants {
     // 用户账户密码错误
     public static final String ERROR_PASSWORD_WORNG = "0003";
 
+    // accToken 无效
+    public static final String ERROR_ACCTOKEN_INVALID = "0004";
+
+    // 密码不合法(变更密码或者账号注册时)
+    public static final String ERROR_PASSWORD_INVALID = "0005";
 }
