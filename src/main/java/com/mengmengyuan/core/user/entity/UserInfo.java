@@ -40,7 +40,21 @@ public class UserInfo extends BaseEntity {
 
     private int userType;// 用户类型
 
+    private Date createDate;// 用户创建时间
+
     public static final int USER_TYPE_LOCAL_STUDENT = 0;// 用户类型为本地学生
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public void setLoginname(String loginname) {
+        this.loginname = loginname;
+    }
 
     public String getPhonenum() {
         return phonenum;

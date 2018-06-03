@@ -20,10 +20,6 @@
     <view class="login-item-button">
       <button type="primary" size="default" plain="false" loading="{{loading}}" class="login-button" bindtap="login"> 登录 </button>
     </view>
-
-
-
-    <view class="error-msg" wx:if="{{error}}">{{error}}</view>
   </view>
 
 </view>

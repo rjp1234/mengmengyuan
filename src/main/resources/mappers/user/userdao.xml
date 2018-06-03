@@ -7,8 +7,8 @@
 	</select>
 	<insert id="insert" parameterType="com.mengmengyuan.core.user.entity.UserInfo">
 		insert into user
-		(id,loginname,nickname,image,password,userType) values (
-		#{id},#{loginName},#{nickname},#{image},#{password},#{userType})
+		(id,loginname,nickname,image,password,userType,createData) values (
+		#{id},#{loginName},#{nickname},#{image},#{password},#{userType},#{createDate})
 	</insert>
 	<update id="updateImage" parameterType="com.mengmengyuan.core.user.entity.UserInfo">
 		 update user set image=#{image} where id=#{id}

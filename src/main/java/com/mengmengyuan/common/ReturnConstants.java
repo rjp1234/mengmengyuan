@@ -23,12 +23,12 @@ public class ReturnConstants {
      * 
      */
     // 登录名为空
-    public static final String ERROR_LOGIN_NAME_EMPTY = "0000";
+    public static final String ERROR_LOGIN_NAME_EMPTY = "0001";
 
     // 密码为空
-    public static final String ERROR_PASSWORD_EMPTY = "0001";
+    public static final String ERROR_PASSWORD_EMPTY = "0002";
 
     // 用户账户密码错误
-    public static final String ERROR_PASSWORD_WORNG = "0002";
+    public static final String ERROR_PASSWORD_WORNG = "0003";
 
 }

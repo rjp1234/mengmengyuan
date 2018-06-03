@@ -9,6 +9,7 @@
  */
 package com.mengmengyuan.core.user.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mengmengyuan.common.ReturnConstants;
 import com.mengmengyuan.common.ThreadPool;
+import com.mengmengyuan.common.util.TimeUtils;
 import com.mengmengyuan.core.base.ApiResponse;
 import com.mengmengyuan.core.base.BaseController;
 import com.mengmengyuan.core.user.entity.UserInfo;
@@ -98,7 +100,11 @@ public class UserLoginController extends BaseController {
         Map<String, Object> returnMap = new HashMap<String, Object>();
         returnMap.put("accToken", accToken);
         returnMap.put("userId", userId);
-        returnMap.put("lastLoginTime", userInfoService.getUserLastLoginTime(userId));
+        // 获取用户上一次登录的时间
+        Date userLastLoginTime = userInfoService.getUserLastLoginTime(userId);
+        returnMap.put("lastLoginTime", TimeUtils.formateDate(userLastLoginTime));
+        returnMap.put("phonenum", userInfo.getPhonenum());
+        // 更新登录时间
         userInfoService.updateLoginTime(userId);
         return ApiResponse.successMessage(returnMap);
 

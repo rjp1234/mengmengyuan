@@ -28,7 +28,9 @@ public class TimeUtils {
      */
     static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
-    static SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+    static SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    static SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * 
@@ -37,6 +39,17 @@ public class TimeUtils {
      */
     public static String formatNowDay() {
         return sdf2.format(new Date());
+    }
+
+    /**
+     * 
+     * formateDate(将制定日期转换成 yyyy-MM-dd HH:mm:ss 的形式)
+     * 
+     */
+    public static String formateDate(Date date) {
+
+        return sdf2.format(date);
+
     }
 
 }
