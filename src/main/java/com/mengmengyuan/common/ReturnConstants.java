@@ -36,4 +36,7 @@ public class ReturnConstants {
 
     // 密码不合法(变更密码或者账号注册时)
     public static final String ERROR_PASSWORD_INVALID = "0005";
+
+    // 请求参数不合法
+    public static final String ERROR_PARAM_INVALID = "0006";
 }

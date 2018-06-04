@@ -1,7 +1,9 @@
 'use strict';
 // api 路径
 var HOST = 'http://127.0.0.1:8080/mengmengyuan/';
-var login = HOST +'user/login';
+var user_module = 'user'
+var login = HOST + user_module +'/login';
+var changePassword = HOST + user_module +"/changePassword"
 
 // get /topics 主题首页
 var topics = HOST + '/topics';
@@ -60,6 +62,7 @@ module.exports = {
   de_collect: de_collect,
   reply: reply,
   login:login,
+  changePassword: changePassword,
 
   // METHOD
   fetchGet: fetchGet,

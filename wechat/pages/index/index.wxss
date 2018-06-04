@@ -30,12 +30,7 @@
   margin-top: 10rpx;
 }
 
-.about{
 
-}
-.about-work{
-
-}
 
 .about-item{
   padding:10rpx 30rpx;

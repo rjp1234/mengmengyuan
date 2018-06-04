@@ -13,14 +13,12 @@
   <view class="userinfo">
     <image class="userinfo-avatar" src="{{userInfo.image}}" background-size="cover"></image>
     <text class="userinfo-nickname">{{userInfo.nickname}}</text>
-    <!-- <view class="usermotto">
-        <text class="user-motto">{{motto}}</text>
-      </view> -->
+  
   </view>
   <navigator url="/pages/login/login" wx:if="{{islogin == false}}">
     <view class="view-cell view-cell-line">
       <view class="view-cell-primary">
-        <button class="view-name" open-type="getUserInfo"  bindgetuserinfo="onGotUserInfo">登录</button>
+        <button class="view-name" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">登录</button>
       </view>
       <view class="view-cell-arrow"></view>
     </view>
@@ -28,7 +26,7 @@
 
   <view class="view-cell view-cell-line" wx:if="{{islogin == true}}">
     <view class="view-cell-primary">
-      <image class="view-img" mode="scaleToFill" src="/images/icon/login.png" />
+
       <text class="view-name" style="color:green">已登录</text>
     </view>
   </view>
@@ -46,12 +44,20 @@
   </view>
   <view class="about" wx:if="{{islogin == true}}">
     <view class="about-item">
-      <text class="about-item-title" wx:if="{{userInfo.nickname}}">欢迎你，{{userInfo.nickname}}</text>
-      <text class="about-item-title" wx:elif="{{userInfo.loginname}}">欢迎你，{{userInfo.loginname}}</text>
-      <text class="about-item-title" wx:if="{{userInfo.phonenum}}" >你当前的手机号为{{userInfo.phonenum}}</text>
-      <text class="about-item-title"  wx:if="!{{userInfo.phonenum}}">
-        点击绑定手机号
-      </text>
+      <text class="about-item-title" wx:if="{{userInfo.nickname}}">欢迎你，{{userInfo.nickname}}.
+      你最近的登录时间是{{userInfo.lastLoginTime}}</text>
+      <text class="about-item-title" wx:elif="{{userInfo.loginname}}">欢迎你，{{userInfo.loginname}}.
+      你最近的登录时间是{{userInfo.lastLoginTime}}</text>
+      <text class="about-item-title" wx:if="{{userInfo.phonenum}}">你当前的手机号为{{userInfo.phonenum}}</text>
+      <view class="view-cell view-cell-line" wx:if="{{islogin == true}}">
+        <view class="view-cell-primary">
+          <text class="about-item-title" wx:if="!{{userInfo.phonenum}}">
+        点击绑定手机号</text ></view></view>
+           <view class="view-cell view-cell-line" wx:if="{{islogin == true}}">
+   
+        <view class="view-cell-primary"> <text class="about-item-title" bindtap='changePassword'>点击修改密码</text>
+        </view>
+      </view>
     </view>
   </view>
 

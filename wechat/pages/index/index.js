@@ -5,21 +5,21 @@ Page({
   data: {
     motto: 'Hello ! WelCome to WxApp',
     islogin: false,
-    userInfo: {}
+    userInfo: app.globalData.userInfo
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {  
+  onLoad: function () {
     var that = this;
     var CuserInfo = wx.getStorageSync('mUserInfo');
     //当前账户已经登录
-    if (CuserInfo){
-      that.setData({ islogin: true, userInfo: CuserInfo});
-      
+    if (CuserInfo) {
+      that.setData({ islogin: true, userInfo: CuserInfo });
+      app.globalData.userInfo = CuserInfo;
     }
 
     //调用应用实例的方法获取全局数据
@@ -30,8 +30,14 @@ Page({
     //   })
     // })
   },
-  
-  onGotUserInfo:function (e) {
-    app.globalData.userInfo=e.detail.userInfo;
+
+  changePassword: function () {
+    wx.redirectTo({
+      url: '../user/passwordchange/passwordchange',
+    })
+  }
+  ,
+  onGotUserInfo: function (e) {
+    app.globalData.userInfo = e.detail.userInfo;
   }
 })

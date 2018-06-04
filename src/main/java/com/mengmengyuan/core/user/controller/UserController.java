@@ -122,11 +122,15 @@ public class UserController extends BaseController {
      * 
      * 
      */
-    @RequestMapping("changePassword ")
+    @RequestMapping("changePassword")
     public ApiResponse changePassword(HttpServletRequest request, HttpServletResponse response) {
         String userId = request.getParameter("userId");
         String accToken = request.getParameter("accToken");
         String password4Change = request.getParameter("password");// 需要修改的密码
+        if (StringUtils.isBlank(userId) || StringUtils.isBlank(accToken) || StringUtils.isBlank(password4Change)) {
+            return ApiResponse.failMessage(ReturnConstants.ERROR_PARAM_INVALID, "param is invalid");
+
+        }
         if (password4Change.length() < 6) {
             return ApiResponse.failMessage(ReturnConstants.ERROR_PASSWORD_INVALID, "password is invalid");
 

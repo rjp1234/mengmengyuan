@@ -38,7 +38,7 @@ public class TimeUtils {
      * 
      */
     public static String formatNowDay() {
-        return sdf2.format(new Date());
+        return sdf3.format(new Date());
     }
 
     /**

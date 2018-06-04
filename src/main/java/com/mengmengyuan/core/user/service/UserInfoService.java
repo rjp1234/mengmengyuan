@@ -107,7 +107,8 @@ public class UserInfoService {
     public boolean checkAccToken(String userId, String accToken) {
         String accTokenWithTime = (String) redisUtils.hmGet(UserUtils.USER_HASH_PREFIX + userId,
                 UserUtils.USER_HASH_ACCTOKEN);
-        return (accToken + TimeUtils.formatNowDay()).equals(accTokenWithTime);
+        accToken = (accToken + "-" + TimeUtils.formatNowDay());
+        return accToken.equals(accTokenWithTime);
     }
 
     /**
