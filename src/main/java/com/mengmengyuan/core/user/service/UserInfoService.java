@@ -14,12 +14,15 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mengmengyuan.common.util.IdGen;
 import com.mengmengyuan.common.util.MD5Utils;
 import com.mengmengyuan.common.util.TimeUtils;
-import com.mengmengyuan.common.util.redis.RedisUtils;
+import com.mengmengyuan.core.base.BaseService;
 import com.mengmengyuan.core.user.dao.UserDao;
 import com.mengmengyuan.core.user.entity.UserInfo;
 import com.mengmengyuan.core.user.utils.UserUtils;
+
+import net.sf.json.JSONObject;
 
 /**
  * 
@@ -32,22 +35,14 @@ import com.mengmengyuan.core.user.utils.UserUtils;
  * 
  */
 @Service
-public class UserInfoService {
+public class UserInfoService extends BaseService {
     @Autowired
     UserDao userDao;
 
-    @Autowired
-    RedisUtils redisUtils;
-
-    public boolean regist(UserInfo userInfo) throws Exception {
-        int i = userDao.insert(userInfo);
-        // 根据手机号\登录名\密码 生成acctoken
-        String acctoken = UserUtils.getUserAccToken(userInfo);
-        if (i == 1) {
-            redisUtils.lPush(userInfo.getId(), acctoken);
-            return true;
-        }
-        return false;
+    public String getUserTextId(String userId) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(userId);
+        return userDao.getTextId(userInfo);
     }
 
     /**
@@ -157,4 +152,47 @@ public class UserInfoService {
 
     }
 
+    /**
+     * 
+     * getById(这里用一句话描述这个方法的作用)
+     * 
+     */
+    public UserInfo getById(String userId) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(userId);
+
+        return userDao.get(userInfo);
+    }
+
+    /**
+     * 
+     * getUserInfoFromJson(根据json获得用户信息)
+     * 
+     * 
+     */
+    public static UserInfo getUserInfoFromJson(String jsonStr) {
+        JSONObject json = JSONObject.fromObject(jsonStr);
+        UserInfo user = (UserInfo) JSONObject.toBean(json, UserInfo.class);
+        return user;
+
+    }
+
+    /**
+     * 
+     * getJsonFromUserInfo(将用户转换成jsonString的格式)
+     * 
+     * 
+     */
+    public static String getJsonFromUserInfo(UserInfo userInfo) {
+        JSONObject json = JSONObject.fromObject(userInfo);
+        return json.toString();
+
+    }
+
+    public static void main(String[] args) {
+        UserInfo user = new UserInfo();
+        user.setId(IdGen.uuid());
+        System.out.println(getJsonFromUserInfo(user));
+        System.out.println(getUserInfoFromJson(getJsonFromUserInfo(user)));
+    }
 }

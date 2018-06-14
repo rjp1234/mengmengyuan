@@ -23,4 +23,8 @@ import org.slf4j.LoggerFactory;
 public class BaseController {
     public Logger logger = LoggerFactory.getLogger(getClass());
 
+    public static final int PAGE_NO = 1;
+
+    public static final int PAGE_SIZE = 20;
+
 }

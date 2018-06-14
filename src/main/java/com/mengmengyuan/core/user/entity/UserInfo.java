@@ -9,8 +9,6 @@
  */
 package com.mengmengyuan.core.user.entity;
 
-import java.sql.Date;
-
 import com.mengmengyuan.core.base.BaseEntity;
 
 /**
@@ -30,8 +28,6 @@ public class UserInfo extends BaseEntity {
 
     private String loginname;// 登录名
 
-    private Date loginDate;// 最后登录时间
-
     private String phonenum;// 手机号
 
     private String nickname;// 昵称
@@ -40,16 +36,16 @@ public class UserInfo extends BaseEntity {
 
     private int userType;// 用户类型
 
-    private Date createDate;// 用户创建时间
+    private String classId;// 班级id
 
     public static final int USER_TYPE_LOCAL_STUDENT = 0;// 用户类型为本地学生
 
-    public Date getCreateDate() {
-        return createDate;
+    public String getClassId() {
+        return classId;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setClassId(String classId) {
+        this.classId = classId;
     }
 
     public void setLoginname(String loginname) {
@@ -58,14 +54,6 @@ public class UserInfo extends BaseEntity {
 
     public String getPhonenum() {
         return phonenum;
-    }
-
-    public Date getLoginDate() {
-        return loginDate;
-    }
-
-    public void setLoginDate(Date loginDate) {
-        this.loginDate = loginDate;
     }
 
     public String getNickname() {

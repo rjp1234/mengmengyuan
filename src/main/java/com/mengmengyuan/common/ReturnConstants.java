@@ -19,8 +19,7 @@ package com.mengmengyuan.common;
  */
 public class ReturnConstants {
     /**
-     * 用户模块相关错误码
-     * 
+     * 用户模块相关错误码 1~20
      */
     // 登录名为空
     public static final String ERROR_LOGIN_NAME_EMPTY = "0001";
@@ -39,4 +38,8 @@ public class ReturnConstants {
 
     // 请求参数不合法
     public static final String ERROR_PARAM_INVALID = "0006";
+
+    /**
+     * 21~40 课文模块
+     */
 }

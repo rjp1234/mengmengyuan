@@ -56,4 +56,11 @@ public interface UserDao extends BaseDao<UserInfo> {
      */
     public int updatePassword(UserInfo user);
 
+    /**
+     * 
+     * getTextId(获取用户对应的教材id)
+     * 
+     */
+    public String getTextId(UserInfo userInfo);
+
 }

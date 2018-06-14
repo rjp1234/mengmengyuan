@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mengmengyuan.core.studio.dao.StudioInfoDao">
+	<select id="countSumPointByUserId" resultType="int">
+		select sum(point)
+		from studio_info where del_flag=#{DEL_FLAG_NORMAL} and
+		user_id=#{userId} group by user_id
+	</select>
+	<select id="countPointTime" resultType="int">
+		select count(1) from
+		studio_info where del_flag=#{DEL_FLAG_NORMAL} and user_id=#{userId}
+		and pointer is not null
+	</select>
+	<select id="countStudio">
+		select count(1) from studio_info
+		<where>
+			del_flag=#{DEL_FLAG_NORMAL}
+			<if test="userId!='' and userId !=null">
+				and user_id=#{userId}
+			</if>
+			<if test="lessionId !='' and lessionId !=null">
+				and lession_id=#{lessionId}
+			</if>
+			<if test="type !='' and type !=null">
+				and type=#{type}
+			</if>
+		</where>
+	</select>
+	<insert id="insert">
+		insert into studio_info (
+		id,
+		url,
+		del_flag,
+		create_time,
+		user_id,
+		lession_id,
+		type
+		)values(
+		#{id},
+		#{url},
+		#{delFlag},
+		#{createTime},
+		#{userId},
+		#{lessionId},
+		#{type}
+		)
+	</insert>
+
+
+</mapper>

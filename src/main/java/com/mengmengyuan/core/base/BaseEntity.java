@@ -22,6 +22,46 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 public class BaseEntity {
     private String id;
 
+    private String delFlag;
+
+    private String createTime;
+
+    private int limit;
+
+    private int skip;
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public int getSkip() {
+        return skip;
+    }
+
+    public void setSkip(int skip) {
+        this.skip = skip;
+    }
+
+    public String getDelFlag() {
+        return delFlag;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag;
+    }
+
     public String getId() {
         return id;
     }
@@ -34,4 +74,13 @@ public class BaseEntity {
     public String toString() {
         return ReflectionToStringBuilder.toString(this);
     }
+
+    /**
+     * 删除标记（0：正常；1：删除；2：审核；）
+     */
+    public static final String DEL_FLAG_NORMAL = "0";
+
+    public static final String DEL_FLAG_DELETE = "1";
+
+    public static final String DEL_FLAG_AUDIT = "2";
 }

@@ -27,6 +27,8 @@ import com.mengmengyuan.common.ThreadPool;
 import com.mengmengyuan.common.util.TimeUtils;
 import com.mengmengyuan.core.base.ApiResponse;
 import com.mengmengyuan.core.base.BaseController;
+import com.mengmengyuan.core.studio.entity.StudioInfo;
+import com.mengmengyuan.core.studio.service.StudioInfoService;
 import com.mengmengyuan.core.user.entity.UserInfo;
 import com.mengmengyuan.core.user.service.UserInfoService;
 
@@ -43,6 +45,9 @@ import com.mengmengyuan.core.user.service.UserInfoService;
 public class UserController extends BaseController {
     @Autowired
     UserInfoService userInfoService;
+
+    @Autowired
+    StudioInfoService studioInfoService;
 
     @RequestMapping("regist")
     public ApiResponse regist(UserInfo userInfo) {
@@ -149,6 +154,30 @@ public class UserController extends BaseController {
 
         return ApiResponse.successMessage("change password success");
 
+    }
+
+    /**
+     * 
+     * userPage 首页显示分两块：个人信息及课文列表 .此处显示个人信息包含 1、总朗读篇数 2、总背诵篇数 3、教师评分总数 4、教师平均打分
+     * 5、用户昵称(微信提供) 6、用户头像(微信提供)
+     * 
+     * 
+     */
+    @RequestMapping("userPage")
+    public ApiResponse userPage(HttpServletRequest request, HttpServletResponse response) {
+        String userId = request.getParameter("userId");
+        int pointTime = studioInfoService.countPointTime(userId);// 总计被打分次数
+        int readTime = studioInfoService.countStudio(userId, null, StudioInfo.TYPE_READ);// 总朗读篇数
+        int reciteTime = studioInfoService.countStudio(userId, null, StudioInfo.TYPE_RECITE);// 总背诵篇数
+        int sumPoint = studioInfoService.getSumPointByUserId(userId);// 教师评分总数
+        int avgPoint = sumPoint / pointTime;// 平均分
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("readTime", readTime);
+        data.put("reciteTime", reciteTime);
+        data.put("sumPoint", sumPoint);
+        data.put("avgPoint", avgPoint);
+
+        return ApiResponse.successMessage(data);
     }
 
 }

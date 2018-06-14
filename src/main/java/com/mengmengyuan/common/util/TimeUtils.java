@@ -52,4 +52,14 @@ public class TimeUtils {
 
     }
 
+    /**
+     * 
+     * formateNowDay2yyyy-MM-dd HH:mm:ss.SSS 返回当前日期
+     * 
+     * 
+     */
+    public static String formateNowDay2() {
+        return sdf1.format(new Date());
+    }
+
 }

@@ -42,6 +42,8 @@ public class UserUtils {
     // 用户hash存储的上次登录时间
     public static final String USER_HASH_LAST_LOGINTIME = "logintime";
 
+    public static final String USER_DETAIL_MSG = "userMsg";
+
     /**
      * 
      * getUserAccToken(根据用户手机号+"-"+登录名+"-"+用户密码生成对应的accToken)
