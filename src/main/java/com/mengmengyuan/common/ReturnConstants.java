@@ -39,7 +39,12 @@ public class ReturnConstants {
     // 请求参数不合法
     public static final String ERROR_PARAM_INVALID = "0006";
 
+    // 用户id不合法
+    public static final String ERROR_USERID_INVALID = "0007";
+
     /**
      * 21~40 课文模块
      */
+    public static final String ERROR_LESSION_ID_INVALID = "0008";
+
 }

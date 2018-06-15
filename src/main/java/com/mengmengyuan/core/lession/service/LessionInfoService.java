@@ -48,4 +48,16 @@ public class LessionInfoService extends BaseService {
         return lessionDao.getList(lession);
     }
 
+    /**
+     * 
+     * getById(这里用一句话描述这个方法的作用)
+     * 
+     * 
+     */
+    public LessionInfo getById(String lessionId) {
+        LessionInfo lession = new LessionInfo();
+        lession.setId(lessionId);
+        return lessionDao.get(lession);
+    }
+
 }

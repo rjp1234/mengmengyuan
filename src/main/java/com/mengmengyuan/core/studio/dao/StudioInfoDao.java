@@ -45,4 +45,11 @@ public interface StudioInfoDao extends BaseDao<StudioInfo> {
      */
     int countStudio(StudioInfo studio);
 
+    /**
+     * 
+     * countComplete(计算完成该课文朗读背诵的学生总数)
+     * 
+     */
+    int countComplete(StudioInfo studio);
+
 }

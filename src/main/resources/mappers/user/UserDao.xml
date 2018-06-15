@@ -4,7 +4,7 @@
 	<select id="getByLoginNameAndPassword" resultType="com.mengmengyuan.core.user.entity.UserInfo"
 		parameterType="com.mengmengyuan.core.user.entity.UserInfo">
 		select * from user where loginname =#{loginname} and
-		password=#{password} where del_flag=#{DEL_FLAG_NORMAL}
+		password=#{password} and del_flag=#{DEL_FLAG_NORMAL}
 	</select>
 	<update id="updateImage" parameterType="com.mengmengyuan.core.user.entity.UserInfo">
 		update user set
@@ -21,7 +21,7 @@
 		password=#{password} where id=#{id} and
 		del_flag=#{DEL_FLAG_NORMAL}
 	</update>
-	<select id="get">
+	<select id="get" resultType="com.mengmengyuan.core.user.entity.UserInfo"> 
 		select * from user where id=#{id} and
 		del_flag=#{DEL_FLAG_NORMAL}
 	</select>

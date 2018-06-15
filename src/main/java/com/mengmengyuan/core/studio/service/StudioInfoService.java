@@ -83,4 +83,16 @@ public class StudioInfoService extends BaseService {
         return studioInfoDao.insert(studio);
     }
 
+    /**
+     * 
+     * countComplete(这里用一句话描述这个方法的作用)
+     * 
+     */
+    public int countComplete(String lessionId) {
+        // TODO Auto-generated method stub
+        StudioInfo studio = new StudioInfo();
+        studio.setLessionId(lessionId);
+        return studioInfoDao.countComplete(studio);
+    }
+
 }

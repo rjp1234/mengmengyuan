@@ -20,4 +20,7 @@
 		unit
 		LIMIT #{skip},#{limit}
 	</select>
+	<select id="get" resultType="com.mengmengyuan.core.lession.entity.LessionInfo">
+		select * from lession_info where id=#{id} and del_flag = #{DEL_FLAG_NORMAL}
+	</select>
 </mapper>

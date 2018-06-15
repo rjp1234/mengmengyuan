@@ -11,7 +11,7 @@
 		studio_info where del_flag=#{DEL_FLAG_NORMAL} and user_id=#{userId}
 		and pointer is not null
 	</select>
-	<select id="countStudio">
+	<select id="countStudio" resultType="int">
 		select count(1) from studio_info
 		<where>
 			del_flag=#{DEL_FLAG_NORMAL}
@@ -45,6 +45,10 @@
 		#{type}
 		)
 	</insert>
-
-
+	<select id="countComplete">
+		select count(1) from studio_info where user_id in (select userId from studio_info where
+		lession_id=#{lessionId} and del_flag=#{DEL_FLAG_NORMAL} and (select
+		count(1) from studio_info where lession_id=#{lessionId} and del_flag=#{DEL_FLAG_NORMAL}
+		)==2)
+	</select>
 </mapper>

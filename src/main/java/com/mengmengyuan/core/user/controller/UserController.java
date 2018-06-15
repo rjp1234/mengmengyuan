@@ -113,7 +113,7 @@ public class UserController extends BaseController {
         returnMap.put("userId", userId);
         // 获取用户上一次登录的时间
         Date userLastLoginTime = userInfoService.getUserLastLoginTime(userId);
-        returnMap.put("lastLoginTime", TimeUtils.formateDate(userLastLoginTime));
+        returnMap.put("lastLoginTime", userLastLoginTime == null ? null : TimeUtils.formateDate(userLastLoginTime));
         returnMap.put("phonenum", userInfo.getPhonenum());
         // 更新登录时间
         userInfoService.updateLoginTime(userId);

@@ -23,19 +23,35 @@ public class LessionPageInfo {
 
     private String image;// 课文封面
 
-    private String createTime;// 创建时间
+    private String issueTime;// 下发时间
 
     private int readNum;// 总朗读人数
 
     private int reciteNum;// 总背诵人数
 
-    private int state;// 当前用户状态 0\未进行。1、已朗读。2、朗读+背诵
+    private int reciteState;// 背诵状态
 
-    public static final int STATE_BLANK = 0;
+    private int readState;// 朗读状态
 
-    public static final int STATE_READ = 1;
+    public static final int STATE_COMPLETE = 1;
 
-    public static final int STATE_RECITE = 2;
+    public static final int STATE_UNFINISHED = 0;
+
+    public int getReciteState() {
+        return reciteState;
+    }
+
+    public void setReciteState(int reciteState) {
+        this.reciteState = reciteState;
+    }
+
+    public int getReadState() {
+        return readState;
+    }
+
+    public void setReadState(int readState) {
+        this.readState = readState;
+    }
 
     public String getId() {
         return id;
@@ -61,12 +77,12 @@ public class LessionPageInfo {
         this.image = image;
     }
 
-    public String getCreateTime() {
-        return createTime;
+    public String getIssueTime() {
+        return issueTime;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+    public void setIssueTime(String issueTime) {
+        this.issueTime = issueTime;
     }
 
     public int getReadNum() {
@@ -83,14 +99,6 @@ public class LessionPageInfo {
 
     public void setReciteNum(int reciteNum) {
         this.reciteNum = reciteNum;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
     }
 
 }
