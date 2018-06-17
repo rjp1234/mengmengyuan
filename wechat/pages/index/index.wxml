@@ -23,7 +23,6 @@
       <view class="view-cell-arrow"></view>
     </view>
   </navigator>
-
   <view class="view-cell view-cell-line" wx:if="{{islogin == true}}">
     <view class="view-cell-primary">
 

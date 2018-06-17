@@ -1,37 +1,44 @@
 var Api = require('../../utils/api.js');
 var util = require('../../utils/util.js');
+var app = getApp()
+var navList = [{
 
-var navList = [
-  {id:"all", title: "全部"},
-  {id:"good", title: "精华"},
-  {id:"share", title: "分享"},
-  {id:"ask", title: "问答"},
-  { id:"competition", title: "竞赛"}
+    title: "全部"
+  }
+
 ];
 
 Page({
   data: {
     activeIndex: 0,
     navList: navList,
-    title: '话题列表',
     postsList: [],
     hidden: false,
-    page: 1,
-    limit: 20,
-    tab: 'all'
+    pageNo: 1,
+    pageSize: 2,
+    all: false
+
   },
 
-  onLoad: function () {
+  onLoad: function() {
     this.getData();
   },
 
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
+    this.setData({
+      pageNo: 1,
+      pageSize: 2,
+      postsList: [],
+      all: false
+
+    })
+
     this.getData();
     console.log('下拉刷新', new Date());
   },
 
-  
-  onReachBottom: function () {
+
+  onReachBottom: function() {
     this.lower();
     console.log('上拉刷新', new Date());
   },
@@ -47,7 +54,9 @@ Page({
       page: 1
     });
     if (tab !== 'all') {
-      that.getData({tab: tab});
+      that.getData({
+        tab: tab
+      });
     } else {
       that.getData();
     }
@@ -55,46 +64,86 @@ Page({
 
   //获取文章列表数据
   getData: function() {
+    //获取前，先进行accToken和userId的判断，若为空，跳转登陆页面
+    var mUserInfo = wx.getStorageSync("mUserInfo");
+    app.globalData.userInfo = mUserInfo;
+
     var that = this;
-    var tab = that.data.tab;
-    var page = that.data.page;
-    var limit = that.data.limit;
-    var ApiUrl = Api.topics +'?tab='+ tab +'&page='+ page +'&limit='+ limit;
+    if (!mUserInfo) {
+      wx.redirectTo({
+        url: '../index/index ',
+      })
+    }
+    //向服务器发送请求，获取列表
 
-    that.setData({ hidden: false });
-
-    if(page == 1) {
-      that.setData({ postsList: [] });
+    var ApiUrl = Api.lessionList;
+    var lessionList = null;
+    if (that.data.all) {
+      console.log('已经到底了')
+      return;
     }
 
-    Api.fetchGet(ApiUrl, (err, res) => {
-      //更新数据
-      that.setData({
-        postsList: that.data.postsList.concat(res.data.map(function (item) {
-          item.last_reply_at = util.getDateDiff(new Date(item.last_reply_at));
-          return item;
-        }))
-      });
+    var dataparam = 'userId=' + mUserInfo.userId + '&accToken=' + mUserInfo.accToken + '&pageNo=' + that.data.pageNo + "&pageSize=" + that.data.pageSize;
+    Api.fetchPost(ApiUrl, dataparam, (err, res) => {
 
-      setTimeout(function () {
-        that.setData({ hidden: true });
-      }, 300);
+      if (res.code == '0') {
+        //请求成功
+        lessionList = res.data.lessionList;
+        lessionList = that.data.postsList.concat(lessionList);
+        that.setData({
+          postsList: lessionList,
+          hidden: true
+        });
+
+        if (res.data.total <= that.data.pageNo * that.data.pageSize) {
+          that.setData({
+            all: true
+
+          })
+
+
+        } else {
+          that.setData({
+
+            pageNo: that.data.pageNo + 1
+
+
+
+
+          })
+
+        }
+
+
+
+
+      } else {
+        //请求失败，可能是用户登陆失效，跳转用户登陆界面
+        wx.redirectTo({
+          url: '../index/index ',
+        })
+
+      }
+
     })
+
+
+
+
+
+
+
+
+
+
+
+
   },
 
   // 滑动底部加载
   lower: function() {
     console.log('滑动底部加载', new Date());
-    var that = this;
-    that.setData({
-      page: that.data.page + 1
-    });
-    if (that.data.tab !== 'all') {
-      this.getData({tab: that.data.tab, page: that.data.page});
-    } else {
-      this.getData({page: that.data.page});
-    }
+    this.getData()
   }
-
 
 })

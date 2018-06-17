@@ -34,4 +34,11 @@ public interface LessionInfoDao extends BaseDao<LessionInfo> {
      */
     List<LessionInfo> getList(LessionInfo lession);
 
+    /**
+     * 
+     * countLession(这里用一句话描述这个方法的作用)
+     * 
+     */
+    int countLession(LessionInfo lession);
+
 }

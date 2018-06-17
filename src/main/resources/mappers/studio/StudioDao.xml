@@ -45,10 +45,26 @@
 		#{type}
 		)
 	</insert>
-	<select id="countComplete">
-		select count(1) from studio_info where user_id in (select userId from studio_info where
-		lession_id=#{lessionId} and del_flag=#{DEL_FLAG_NORMAL} and (select
-		count(1) from studio_info where lession_id=#{lessionId} and del_flag=#{DEL_FLAG_NORMAL}
-		)==2)
+
+	<select id="countComplete" resultType="int">
+		SELECT
+		count(1)
+		FROM
+		studio_info
+		WHERE
+		user_id IN (
+		SELECT
+		user_id
+		FROM
+		studio_info
+		WHERE
+		lession_id = #{lessionId} and del_flag=#{DEL_FLAG_NORMAL} and (select
+		count(1)
+		FROM
+		studio_info
+		WHERE
+		lession_id = #{lessionId} and del_flag=#{DEL_FLAG_NORMAL}
+		) = 2
+		)
 	</select>
 </mapper>

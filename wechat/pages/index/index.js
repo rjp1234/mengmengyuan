@@ -27,7 +27,7 @@ Page({
     //   //更新数据
     //   that.setData({
     //     userInfo:userInfo
-    //   })
+    //   }) 
     // })
   },
 
@@ -40,4 +40,13 @@ Page({
   onGotUserInfo: function (e) {
     app.globalData.userInfo = e.detail.userInfo;
   }
-})
+
+ 
+
+  
+
+}
+ 
+
+
+)

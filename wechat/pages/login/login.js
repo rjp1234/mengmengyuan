@@ -14,6 +14,7 @@ Page({
 
   onLoad: function () {
     var mUserInfo = wx.getStorageSync("mUserInfo");
+    console.log(mUserInfo)
     if (mUserInfo) {
       wx.switchTab({
           url: '../index/index',
@@ -22,6 +23,7 @@ Page({
   },
 
   bindLoginname: function (e) {
+    console.log(1)
     this.setData({
       loginname: e.detail.value
     })
@@ -97,7 +99,7 @@ Page({
       if (mUserInfo) {
       var pages=getCurrentPages();//获取加载的页面栈
       var prevpage=pages[pages.length-2];//获取上一页面（在这里为index页面）
-      console.log(mUserInfo)
+  
       prevpage.setData({ islogin: true, userInfo: mUserInfo});
       app.globalData.userInfo = mUserInfo;
       wx.switchTab({

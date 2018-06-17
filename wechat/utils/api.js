@@ -1,12 +1,14 @@
 'use strict';
 // api 路径
-var HOST = 'http://127.0.0.1:8080/mengmengyuan/';
+var HOST = 'http://127.0.0.1:8090/mengmengyuan/';
+//用户模块
 var user_module = 'user'
 var login = HOST + user_module +'/login';
 var changePassword = HOST + user_module +"/changePassword"
-
+//课文模块
+var lession_module='lession'
 // get /topics 主题首页
-var topics = HOST + '/topics';
+var lessionList = HOST + lession_module+'/lessionList';
 //get /topic/:id 主题详情
 var topic = HOST + '/topic';
 // post /accesstoken 验证 accessToken 的正确性
@@ -55,7 +57,7 @@ function fetchPost(url, data, callback) {
 
 module.exports = {
   // API
-  topics: topics,
+  lessionList: lessionList,
   topic: topic,
   accesstoken: accesstoken,
   collect: collect,

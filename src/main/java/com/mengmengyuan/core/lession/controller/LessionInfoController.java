@@ -112,6 +112,9 @@ public class LessionInfoController extends BaseController {
             lessionPage.setIssueTime(bindService.get(lession.getId(), classId).getCreateTime());
             pageList.add(lessionPage);
         }
+        // 获取课文总数
+        int total = lessionInfoService.countLession(classId);
+        data.put("total", total);
 
         return ApiResponse.successMessage(data);
 
@@ -138,7 +141,7 @@ public class LessionInfoController extends BaseController {
             logger.error(e.getMessage(), e);
         }
 
-        if (StringUtils.isNotBlank(lessionId)) {
+        if (StringUtils.isBlank(lessionId)) {
             return ApiResponse.failMessage(ReturnConstants.ERROR_LESSION_ID_INVALID, "lession id is empty");
         }
         LessionInfo lession = null;
@@ -156,6 +159,11 @@ public class LessionInfoController extends BaseController {
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
+        if (bind == null) {
+            return ApiResponse.failMessage(ReturnConstants.ERROR_LESSION_IS_NOT_ISSUE, "lession is not issue");
+
+        }
+
         LessionDetailPageInfo detail = new LessionDetailPageInfo();
         try {
             // 组装课文返回对象

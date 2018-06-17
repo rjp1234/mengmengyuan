@@ -28,9 +28,18 @@ Page({
   }
   ,
   formSubmit: function () {
-    var that = this;
+
+    var that = this;    
     var pas1 = that.data.password1;
     var pas2 = that.data.password2;
+    if(pas1==''||pas2==''){
+      that.setData({ passCheckFlag: false });
+      that.setData({ msgColor: "red" });
+      that.setData({ msg: "密码不符合要求" });
+      return;
+    }
+    
+  
     if (!(pas2 == pas1)) {
       //密码不一致
       that.setData({ passCheckFlag: false });
@@ -39,7 +48,7 @@ Page({
       return;
     }
     var userInfo = wx.getStorageSync("mUserInfo");
-    console.log(userInfo);
+    
     var dataparam = "userId=" + userInfo.userId + "&password=" + pas2 + "&accToken=" + userInfo.accToken;
     var ApiUrl = Api.changePassword;
     console.log(ApiUrl);
@@ -64,7 +73,7 @@ Page({
     var that = this;
     var password = e.detail.value;
     that.setData({ flag: true });
-    if (password.length < 6) {
+    if (password&&password.length < 6) {
       that.setData({ passCheckFlag: false });
       that.setData({ msgColor: "red" });
       that.setData({ msg: "密码不得小于六位" });

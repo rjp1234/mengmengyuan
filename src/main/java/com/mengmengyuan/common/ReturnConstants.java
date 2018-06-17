@@ -46,5 +46,6 @@ public class ReturnConstants {
      * 21~40 课文模块
      */
     public static final String ERROR_LESSION_ID_INVALID = "0008";
+    public static final String ERROR_LESSION_IS_NOT_ISSUE="0009";
 
 }

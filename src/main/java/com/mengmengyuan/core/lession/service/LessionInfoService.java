@@ -60,4 +60,15 @@ public class LessionInfoService extends BaseService {
         return lessionDao.get(lession);
     }
 
+    /**
+     * 
+     * countLession(这里用一句话描述这个方法的作用)
+     * 
+     */
+    public int countLession(String classId) {
+        LessionInfo lession = new LessionInfo();
+        lession.setClassId(classId);
+        return lessionDao.countLession(lession);
+    }
+
 }

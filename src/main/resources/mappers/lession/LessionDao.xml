@@ -7,7 +7,8 @@
 		FROM
 		lession_info
 		WHERE
-		id IN (
+		id
+		IN (
 		SELECT
 		lession_id
 		FROM
@@ -21,6 +22,25 @@
 		LIMIT #{skip},#{limit}
 	</select>
 	<select id="get" resultType="com.mengmengyuan.core.lession.entity.LessionInfo">
-		select * from lession_info where id=#{id} and del_flag = #{DEL_FLAG_NORMAL}
+		select * from lession_info where
+		id=#{id} and del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+	<select id="countLession" resultType="int"> 
+		SELECT
+		count(1)
+		FROM
+		lession_info
+		WHERE
+		id IN (
+		SELECT
+		lession_id
+		FROM
+		lession_class_bind
+		WHERE
+		class_id = #{classId}
+		AND del_flag =
+		#{DEL_FLAG_NORMAL}
+		)
+
 	</select>
 </mapper>
