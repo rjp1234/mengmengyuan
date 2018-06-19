@@ -25,7 +25,7 @@
 		select * from lession_info where
 		id=#{id} and del_flag = #{DEL_FLAG_NORMAL}
 	</select>
-	<select id="countLession" resultType="int"> 
+	<select id="countLession" resultType="int" > 
 		SELECT
 		count(1)
 		FROM

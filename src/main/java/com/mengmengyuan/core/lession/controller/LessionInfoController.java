@@ -17,6 +17,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mengmengyuan.common.ReturnConstants;
 import com.mengmengyuan.core.base.ApiResponse;
 import com.mengmengyuan.core.base.BaseController;
+import com.mengmengyuan.core.base.teacher.service.TeacherService;
 import com.mengmengyuan.core.lession.entity.LessionClassBindInfo;
 import com.mengmengyuan.core.lession.entity.LessionDetailPageInfo;
 import com.mengmengyuan.core.lession.entity.LessionInfo;
@@ -59,6 +61,9 @@ public class LessionInfoController extends BaseController {
 
     @Autowired
     StudioInfoService studioService;
+
+    @Autowired
+    TeacherService teacherService;
 
     /**
      * 
@@ -109,7 +114,9 @@ public class LessionInfoController extends BaseController {
             lessionPage.setReciteNum(studioService.countStudio(null, lession.getId(), StudioInfo.TYPE_RECITE));// 获取课文总背诵次数
             lessionPage.setReadState(studioService.countStudio(userId, lession.getId(), StudioInfo.TYPE_READ));// 获取当前用户对该课文的朗读完成状态
             lessionPage.setReciteState(studioService.countStudio(userId, lession.getId(), StudioInfo.TYPE_RECITE));
-            lessionPage.setIssueTime(bindService.get(lession.getId(), classId).getCreateTime());
+            String issueTime = bindService.get(lession.getId(), classId).getCreateTime();
+            int start = issueTime.indexOf(".");
+            lessionPage.setIssueTime(issueTime.substring(0, start));
             pageList.add(lessionPage);
         }
         // 获取课文总数
@@ -169,14 +176,16 @@ public class LessionInfoController extends BaseController {
             // 组装课文返回对象
             detail.setId(lession.getId());
             detail.setName(lession.getName());
-            detail.setContent(lession.getContent());
+            detail.setContent(StringEscapeUtils.unescapeHtml(lession.getContent()));
+            detail.setImage(lession.getImage());
             detail.setCompleteNum(studioService.countComplete(lessionId));
-            detail.setIssueTime(bind.getCreateTime());
+            detail.setIssueTime(bind.getCreateTime().substring(0, bind.getCreateTime().indexOf(".")));
             detail.setExampleUrl(lession.getExampleUrl());
-            detail.settContent(lession.gettContent());
+            detail.settContent(StringEscapeUtils.unescapeHtml(lession.gettContent()));
             detail.settStudioUrl(lession.gettStudioUrl());
             detail.setReadState(studioService.countStudio(userId, lessionId, StudioInfo.TYPE_READ));
             detail.setReciteState(studioService.countStudio(userId, lessionId, StudioInfo.TYPE_RECITE));
+            detail.setCreater(teacherService.getTNameById(lession.getCreater()));
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }

@@ -39,9 +39,29 @@ public class LessionDetailPageInfo {
 
     private int readState;// 朗读状态
 
+    private String image;// 封面
+
+    private String creater;
+
     public static final int STATE_COMPLETE = 1;// 状态完成
 
     public static final int STATE_UNFINISHED = 0;// 状态未完成
+
+    public String getCreater() {
+        return creater;
+    }
+
+    public void setCreater(String creater) {
+        this.creater = creater;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getName() {
         return name;
