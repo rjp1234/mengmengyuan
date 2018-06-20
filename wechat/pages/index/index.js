@@ -5,7 +5,7 @@ Page({
   data: {
     motto: 'Hello ! WelCome to WxApp',
     islogin: false,
-    userInfo: app.globalData.userInfo
+    userInfo: null
   },
   //事件处理函数
   bindViewTap: function () {
@@ -13,22 +13,22 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
+
+
+  onShow: function () {
     var that = this;
     var CuserInfo = wx.getStorageSync('mUserInfo');
+    console.log(CuserInfo)
     //当前账户已经登录
     if (CuserInfo) {
-      that.setData({ islogin: true, userInfo: CuserInfo });
-      app.globalData.userInfo = CuserInfo;
+      that.setData({ islogin: true});
+     
+    }else{
+      that.setData({ islogin: false });
     }
-
-    //调用应用实例的方法获取全局数据
-    // app.getUserInfo(function(userInfo){
-    //   //更新数据
-    //   that.setData({
-    //     userInfo:userInfo
-    //   }) 
-    // })
+    that.setData({
+        userInfo:CuserInfo
+    })
   },
 
   changePassword: function () {
@@ -38,7 +38,7 @@ Page({
   }
   ,
   onGotUserInfo: function (e) {
-    app.globalData.userInfo = e.detail.userInfo;
+    wx.setStorageSync("userInfo", e.detail.userInfo) ;
   }
 
  

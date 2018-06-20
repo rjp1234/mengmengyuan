@@ -66,7 +66,7 @@ Page({
     }
 
     //获取微信用户信息
-    var userInfo = app.globalData.userInfo;
+    var userInfo = wx.getStorageSync("userInfo");
     //正在加载中图片显示
     that.setData({ loading: true });
     //拼接请求参数
@@ -101,7 +101,6 @@ Page({
       var prevpage=pages[pages.length-2];//获取上一页面（在这里为index页面）
   
       prevpage.setData({ islogin: true, userInfo: mUserInfo});
-      app.globalData.userInfo = mUserInfo;
       wx.switchTab({
           url: '../index/index',
         });

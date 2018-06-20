@@ -19,7 +19,14 @@ Page({
     all: false
 
   },
-
+  onShow:function(){
+    var mUserInfo=wx.getStorageSync("mUserInfo");
+    if(!mUserInfo){
+      wx.switchTab({
+        url: '../index/index'
+      })
+    }
+  },
   onLoad: function () {
     this.getData();
   },

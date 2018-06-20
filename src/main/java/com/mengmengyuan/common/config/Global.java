@@ -17,7 +17,7 @@ public class Global {
                 if (properties == null) {
                     Properties properties = new Properties();
                     // 使用ClassLoader加载properties配置文件生成对应的输入流
-                    InputStream in = Global.class.getClassLoader().getResourceAsStream("runtime.properties");
+                    InputStream in = Global.class.getClassLoader().getResourceAsStream("application.properties");
                     // 使用properties对象加载输入流
                     try {
                         properties.load(in);

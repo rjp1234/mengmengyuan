@@ -35,17 +35,17 @@ public class LessionDetailPageInfo {
 
     private String tStudioUrl;// 老师的话录音
 
-    private int reciteState;// 背诵状态
+    private boolean reciteState;// 背诵状态
 
-    private int readState;// 朗读状态
+    private boolean readState;// 朗读状态
 
     private String image;// 封面
 
     private String creater;
 
-    public static final int STATE_COMPLETE = 1;// 状态完成
+    public static final boolean STATE_COMPLETE = true;// 状态完成
 
-    public static final int STATE_UNFINISHED = 0;// 状态未完成
+    public static final boolean STATE_UNFINISHED = false;// 状态未完成
 
     public String getCreater() {
         return creater;
@@ -127,20 +127,28 @@ public class LessionDetailPageInfo {
         this.tStudioUrl = tStudioUrl;
     }
 
-    public int getReciteState() {
+    public boolean isReciteState() {
         return reciteState;
     }
 
-    public void setReciteState(int reciteState) {
+    public void setReciteState(boolean reciteState) {
         this.reciteState = reciteState;
     }
 
-    public int getReadState() {
+    public boolean isReadState() {
         return readState;
     }
 
-    public void setReadState(int readState) {
+    public void setReadState(boolean readState) {
         this.readState = readState;
+    }
+
+    @Override
+    public String toString() {
+        return "LessionDetailPageInfo [id=" + id + ", name=" + name + ", issueTime=" + issueTime + ", content="
+                + content + ", completeNum=" + completeNum + ", exampleUrl=" + exampleUrl + ", tContent=" + tContent
+                + ", tStudioUrl=" + tStudioUrl + ", reciteState=" + reciteState + ", readState=" + readState
+                + ", image=" + image + ", creater=" + creater + "]";
     }
 
 }

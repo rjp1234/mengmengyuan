@@ -183,8 +183,9 @@ public class LessionInfoController extends BaseController {
             detail.setExampleUrl(lession.getExampleUrl());
             detail.settContent(StringEscapeUtils.unescapeHtml(lession.gettContent()));
             detail.settStudioUrl(lession.gettStudioUrl());
-            detail.setReadState(studioService.countStudio(userId, lessionId, StudioInfo.TYPE_READ));
-            detail.setReciteState(studioService.countStudio(userId, lessionId, StudioInfo.TYPE_RECITE));
+            detail.setReadState(studioService.countStudio(userId, lessionId, StudioInfo.TYPE_READ) > 0 ? true : false);
+            detail.setReciteState(
+                    studioService.countStudio(userId, lessionId, StudioInfo.TYPE_RECITE) > 0 ? true : false);
             detail.setCreater(teacherService.getTNameById(lession.getCreater()));
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

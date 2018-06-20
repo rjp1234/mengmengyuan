@@ -12,8 +12,6 @@ package com.mengmengyuan.core.studio.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mengmengyuan.common.util.IdGen;
-import com.mengmengyuan.common.util.TimeUtils;
 import com.mengmengyuan.core.base.BaseService;
 import com.mengmengyuan.core.studio.dao.StudioInfoDao;
 import com.mengmengyuan.core.studio.entity.StudioInfo;
@@ -78,8 +76,6 @@ public class StudioInfoService extends BaseService {
      * 
      */
     public int insert(StudioInfo studio) {
-        studio.setId(IdGen.uuid());
-        studio.setCreateTime(TimeUtils.formateNowDay2());
         return studioInfoDao.insert(studio);
     }
 

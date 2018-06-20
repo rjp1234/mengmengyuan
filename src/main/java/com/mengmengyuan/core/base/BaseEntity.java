@@ -22,7 +22,7 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 public class BaseEntity {
     private String id;
 
-    private String delFlag;
+    private String delFlag = DEL_FLAG_NORMAL;
 
     private String createTime;
 

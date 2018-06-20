@@ -45,7 +45,17 @@ public class ReturnConstants {
     /**
      * 21~40 课文模块
      */
-    public static final String ERROR_LESSION_ID_INVALID = "0008";
-    public static final String ERROR_LESSION_IS_NOT_ISSUE="0009";
+    public static final String ERROR_LESSION_ID_INVALID = "0021";
 
+    public static final String ERROR_LESSION_IS_NOT_ISSUE = "0022";
+
+    /**
+     * 41~60 录音模块
+     */
+
+    public static final String ERROR_STUDIO_UPLOAD_FAILED = "0041";// 录音文件上传失败
+
+    public static final String ERROR_STUDIO_TYPE_INVALID = "0042";// 录音类型（朗读/背诵）不合法
+
+    public static final String ERROR_SAME_TYPE_STUDIO_ALREADY_UPLOAD = "0043";// 相同类型的录音已经上传
 }
