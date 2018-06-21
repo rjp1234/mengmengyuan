@@ -9,7 +9,6 @@
         <text>{{ detail.name}}</text>
         <image wx:if="{{detail.readState&&detail.reciteState}}" class="image-complete" src='/images/icon/complete.jpg'></image>
       </view>
-
       <view class="detail-post-time">{{ detail.issueTime }}</view>
     </view>
   </view>
@@ -24,12 +23,24 @@
     <view class="detail-post-title">
       示范录音：
     </view>
-    <audio poster="{{detail.image}}" name="{{detail.name}}" author="{{author}}" src="{{detail.exampleUrl}}" id="example" controls bindplay="funplay" bindpause="funpause" bindtimeupdate="funtimeupdate" bindended="funended" binderror="funerror" action="{{action}}"></audio>
-    <view class="speed-controller">
-      <button class="speedbtn"  size="mini" bindtap='slowDown'>速度慢点</button>
-      <button class="speedbtn" bindtap='recover' bindtap='recover'>恢复默认</button>
-      <button class="speedbtn" bindtap='quick'>速度快点</button>
+    <!--audio start-->
+    <audio src="{{detail.exampleUrl}}" id="myAudio1" bindtimeupdate="updata1"></audio>
+    <view class="progress">
+      <text>{{result1}}</text>
+      <slider bindchange="sliderChange1" step="2" value="{{currentTime1}}" max="{{duration1}}" class="slider" selected-color="#ff5e5e" />
+      <text>{{times1}}</text>
+      <view class="audioOpen">
+        <image class="audioOpen" bindtap="audioPlay1" wx:if="{{!isOpen1}}" src="../../images/icon/voice1.jpg" />
+        <image class="audioOpen" src="../../images/icon/voice2.jpg" bindtap="audioPause1" wx:if="{{isOpen1}}" />
+      </view>
+
     </view>
+
+    <!--audio end-->
+
+    <!-- 
+ <audio poster="{{detail.image}}" name="{{detail.name}}" author="{{author}}" src="{{detail.exampleUrl}}" id="example" controls bindplay="funplay" bindpause="funpause" bindtimeupdate="funtimeupdate" bindended="funended" binderror="funerror" action="{{action}}"></audio> -->
+
   </view>
   <view class="detail-post-content" hidden="{{tContentHidden}}">
     <view class="detail-post-title">
@@ -41,12 +52,20 @@
     <view class="detail-post-title">
       老师的话:
     </view>
-    <audio poster="{{detail.image}}" name="{{detail.creater}}老师" author="" src="{{detail.tStudioUrl}}" id="tStudio" controls bindplay="funplay" bindpause="funpause" bindtimeupdate="funtimeupdate" bindended="funended" binderror="funerror"></audio>
-    <view class="speed-controller">
-      <button class="speedbtn"  size="mini" bindtap='slowDown'>速度慢点</button>
-      <button class="speedbtn" bindtap='recover' bindtap='recover'>恢复默认</button>
-      <button class="speedbtn" bindtap='quick'>速度快点</button>
+    <!--audio start-->
+    <audio src="{{detail.tStudioUrl}}" id="myAudio2" bindtimeupdate="updata2"></audio>
+    <view class="progress">
+      <text>{{result2}}</text>
+      <slider bindchange="sliderChange2" step="2" value="{{currentTime2}}" max="{{duration2}}" class="slider" selected-color="#ff5e5e" />
+      <text>{{times2}}</text>
+
     </view>
+    <view class="audioOpen">
+      <image class="audioOpen" bindtap="audioPlay2" wx:if="{{!isOpen2}}" src="../../images/icon/voice1.jpg" />
+
+      <image class="audioOpen" src="../../images/icon/voice2.jpg" bindtap="audioPause2" wx:if="{{isOpen2}}" />
+    </view>
+    <!--audio end-->
   </view>
   <view class="button-select">
     <button wx:if="{{!detail.readState}}" class='btn' size="mini" hidden='{{readHidden}}' bindtap='read'>{{read}}</button>

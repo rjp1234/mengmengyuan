@@ -7,6 +7,18 @@ const innerAudioContext = wx.createInnerAudioContext()
 //var tempFilePath = null;
 Page({
   data: {
+    //示范录音播放器配置
+    currentTime1: 0,
+    duration1: 0,
+    result1: '0分0秒',
+    isOpen1: false,
+    //老师的话播放器配置
+    currentTime2: 0,
+    duration2: 0,
+    result2: '0分0秒',
+    isOpen2: false,
+
+
     completeHidden:true,
     studioSrc: null, //学生录音的url
     lessionId: '',
@@ -45,6 +57,8 @@ Page({
   },
 
   onLoad: function(options) {
+    this.audioCtx1 = wx.createAudioContext('myAudio1')
+    this.audioCtx2 = wx.createAudioContext('myAudio2')
     console.log("onload")
     //navigator 跳转传递的参数传送到这里
     this.fetchData(options.id);
@@ -471,85 +485,95 @@ Page({
       }
     })
   },
-  audioPlay: function() {
+  //播放器1 start
+  audioPlay1: function () {
+    this.audioCtx1.play()
     this.setData({
-      action: {
-        method: 'play'
-      }
-    });
+      isOpen1: true
+    })
   },
-  audioPause: function() {
-    this.audioCtx.pause()
+  audioPause1: function () {
+    this.audioCtx1.pause()
+    this.setData({
+      isOpen1: false
+    })
   },
-  audio14: function() {
-    this.audioCtx.seek(14)
+  updata1(e) {
+    var that = this;
+    // console.log((e.detail.currentTime / 100).toFixed(2))
+    let duration = e.detail.duration.toFixed(2) * 100,
+      currentTime = e.detail.currentTime.toFixed(2) * 100;
+    that.setData({
+      duration1: duration,
+      currentTime1: currentTime
+    })
+    console.log('updata1')
+    that.formatSeconds1(currentTime / 100);
   },
-  audioStart: function() {
-    this.audioCtx.seek(0)
+  sliderChange1(e) {
+    var that = this
+    that.setData({
+      currentTime1: e.detail.value
+    })
+    that.audioSeek1(e.detail.value)
   },
-  funplay: function() {
-    console.log("audio play");
+  audioSeek1: function (currentTime) {
+    this.audioCtx1.seek(currentTime / 100)
   },
-  funpause: function() {
-    console.log("audio pause");
-  },
-  funtimeupdate: function(u) {
-  
-  },
-  funended: function() {
-    console.log("audio end");
-  },
-  slowDown:function(){
-    console.log('slow');
+  formatSeconds1(s) {
     var that=this;
-    console.log(that.data.action)
-      //播放慢一点
-    if(that.data.speed<0){
-      return ;
-    }
+    var time = Math.floor(s / 60) + "分" + Math.floor(s - Math.floor(s / 60) * 60) + "秒";
+    console.log( "1、"+time)
     that.setData({
-      speed: that.data.speed-0.2
-    })
-    console.log(that.data.speed)
-    that.setData({
-      action: {
-        method: 'setPlaybackRate',
-        data: 2 //减速
-      }
-    });
-  },
-  recover:function(){
-    console.log('revocer')
-    var that = this;
-    that.setData({
-      speed: 1
-    });
-    that.setData({
-      action: {
-        method: 'setPlaybackRate',
-        data: that.data.speed //减速
-      }
-    });
-  } ,
-  quick:function(){
-    console.log('quick');
-    var that = this;
-    if(that.data.speed>3){
-      return 
-    }
-    that.setData({
-      speed: that.data.speed + 0.2
-    })
-    console.log(that.data.speed)
-    that.setData({
-      action: {
-        method: 'setPlaybackRate',
-        data: that.data.speed //加速
-      }
-    });
-  },
 
+      result1: time
 
+    })
+  },
+//播放器2 start
+  audioPlay2: function () {
+    this.audioCtx2.play()
+    this.setData({
+      isOpen2: true
+    })
+  },
+  audioPause2: function () {
+    this.audioCtx2.pause()
+    this.setData({
+      isOpen2: false
+    })
+  },
+  updata2(e) {
+    var that = this;
+    // console.log((e.detail.currentTime / 100).toFixed(2))
+    let duration = e.detail.duration.toFixed(2) * 100,
+      currentTime = e.detail.currentTime.toFixed(2) * 100;
+    that.setData({
+      duration2: duration,
+      currentTime2: currentTime
+    })
+    that.formatSeconds2(currentTime / 100);
+  },
+  sliderChange2(e) {
+    var that = this
+    that.setData({
+      currentTime2: e.detail.value
+    })
+    that.audioSeek2(e.detail.value)
+  },
+  audioSeek2: function (currentTime) {
+    this.audioCtx2.seek(currentTime / 100)
+  },
+  formatSeconds2(s) {
+    var that=this;
+    var time = Math.floor(s / 60) + "分" + Math.floor(s - Math.floor(s / 60) * 60) + "秒";
+    console.log(time)
+    that.setData({
+
+      result2: time
+
+    })
+  },
   funerror: function(u) {
     console.log(u.detail.errMsg);
     var that = this;

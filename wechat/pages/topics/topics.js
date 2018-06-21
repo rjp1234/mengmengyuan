@@ -15,7 +15,7 @@ Page({
     postsList: [],
     hidden: false,
     pageNo: 1,
-    pageSize: 2,
+    pageSize: 20,
     all: false
 
   },

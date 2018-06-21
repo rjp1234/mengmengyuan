@@ -6,8 +6,9 @@
         <view class="posts-list">
           <navigator url="/pages/detail/detail?id={{item.id}}">
             <view class="posts-list-info" index="{{index}}">
-              <image src="{{item.image}}" />
+              <image class='item-image' src="{{item.image}}" />
               <view class="item-box">
+              
                 <view class="userinfo">
                   <text>下发时间</text>
                   <text class="time">{{item.issueTime}}</text>
@@ -28,15 +29,13 @@
                   <text>背诵人数</text>
                   <text class="time">{{item.readNum}}</text>
                 </view>
-     <view class="userinfo">
-                  <text>你的完成状态</text>
-                  <text class="time">{{item.readState}}&&{{item.reciteState}}</text>
-                </view>
+              
+                <image wx:if="{{item.readState&&item.reciteState}}" class="completeImg" src="../../images/icon/complete.jpg" ></image>
+              </view>
             </view>
+          </navigator>
         </view>
-        </navigator>
-    </view>
-    </block>
+      </block>
     </view>
   </scroll-view>
 

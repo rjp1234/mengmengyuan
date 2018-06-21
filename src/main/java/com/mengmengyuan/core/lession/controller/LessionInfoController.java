@@ -112,8 +112,8 @@ public class LessionInfoController extends BaseController {
             lessionPage.setName(lession.getName());
             lessionPage.setReadNum(studioService.countStudio(null, lession.getId(), StudioInfo.TYPE_READ));// 获取课文总朗读次数
             lessionPage.setReciteNum(studioService.countStudio(null, lession.getId(), StudioInfo.TYPE_RECITE));// 获取课文总背诵次数
-            lessionPage.setReadState(studioService.countStudio(userId, lession.getId(), StudioInfo.TYPE_READ));// 获取当前用户对该课文的朗读完成状态
-            lessionPage.setReciteState(studioService.countStudio(userId, lession.getId(), StudioInfo.TYPE_RECITE));
+            lessionPage.setReadState(studioService.countStudio(userId, lession.getId(), StudioInfo.TYPE_READ) > 0);// 获取当前用户对该课文的朗读完成状态
+            lessionPage.setReciteState(studioService.countStudio(userId, lession.getId(), StudioInfo.TYPE_RECITE) > 0);
             String issueTime = bindService.get(lession.getId(), classId).getCreateTime();
             int start = issueTime.indexOf(".");
             lessionPage.setIssueTime(issueTime.substring(0, start));
@@ -183,9 +183,8 @@ public class LessionInfoController extends BaseController {
             detail.setExampleUrl(lession.getExampleUrl());
             detail.settContent(StringEscapeUtils.unescapeHtml(lession.gettContent()));
             detail.settStudioUrl(lession.gettStudioUrl());
-            detail.setReadState(studioService.countStudio(userId, lessionId, StudioInfo.TYPE_READ) > 0 ? true : false);
-            detail.setReciteState(
-                    studioService.countStudio(userId, lessionId, StudioInfo.TYPE_RECITE) > 0 ? true : false);
+            detail.setReadState(studioService.countStudio(userId, lessionId, StudioInfo.TYPE_READ) > 0);
+            detail.setReciteState(studioService.countStudio(userId, lessionId, StudioInfo.TYPE_RECITE) > 0);
             detail.setCreater(teacherService.getTNameById(lession.getCreater()));
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

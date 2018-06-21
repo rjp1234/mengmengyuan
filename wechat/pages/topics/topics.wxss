@@ -118,3 +118,18 @@
 .loading-font{
   font-size: 30rpx;
 }
+.item-image{
+  width: 20%;
+  height:70px;
+
+}
+.completeImg{
+  width: 100px;
+  height: 100px;
+  top: 10px;
+  right: 5px;
+  display:block;
+  max-width: 100%;
+  position: absolute;
+  z-index:  -1;
+}

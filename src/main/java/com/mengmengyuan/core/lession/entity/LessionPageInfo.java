@@ -29,27 +29,27 @@ public class LessionPageInfo {
 
     private int reciteNum;// 总背诵人数
 
-    private int reciteState;// 背诵状态
+    private boolean reciteState;// 背诵状态
 
-    private int readState;// 朗读状态
+    private boolean readState;// 朗读状态
 
     public static final int STATE_COMPLETE = 1;
 
     public static final int STATE_UNFINISHED = 0;
 
-    public int getReciteState() {
+    public boolean isReciteState() {
         return reciteState;
     }
 
-    public void setReciteState(int reciteState) {
+    public void setReciteState(boolean reciteState) {
         this.reciteState = reciteState;
     }
 
-    public int getReadState() {
+    public boolean isReadState() {
         return readState;
     }
 
-    public void setReadState(int readState) {
+    public void setReadState(boolean readState) {
         this.readState = readState;
     }
 
