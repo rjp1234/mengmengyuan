@@ -8,29 +8,13 @@
             <view class="posts-list-info" index="{{index}}">
               <image class='item-image' src="{{item.image}}" />
               <view class="item-box">
-              
-                <view class="userinfo">
-                  <text>下发时间</text>
-                  <text class="time">{{item.issueTime}}</text>
+                <view class="posts-title">
+                  <text >{{item.name}}</text>
                 </view>
-                <view class="userinfo">
-                  <text>课程名称</text>
-                  <text class="time">{{item.name}}</text>
+                <view class=".item-bottom">
+                    <text>通关{{item.completeNum}}人</text>
                 </view>
-                <view class="userinfo">
-                  <text>朗读人数</text>
-                  <text class="time">{{item.readNum}}</text>
-                </view>
-                <view class="userinfo">
-                  <text>朗读人数</text>
-                  <text class="time">{{item.readNum}}</text>
-                </view>
-                <view class="userinfo">
-                  <text>背诵人数</text>
-                  <text class="time">{{item.readNum}}</text>
-                </view>
-              
-                <image wx:if="{{item.readState&&item.reciteState}}" class="completeImg" src="../../images/icon/complete.jpg" ></image>
+                <image wx:if="{{item.reciteState}}" class="completeImg" src="../../images/icon/complete.jpg" ></image>
               </view>
             </view>
           </navigator>

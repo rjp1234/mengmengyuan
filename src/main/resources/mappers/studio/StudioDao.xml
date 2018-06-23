@@ -38,33 +38,43 @@
 		)values(
 		#{id},
 		#{url},
-		#{delFlag},
+		#{DEL_FLAG_NORMAL},
 		#{createTime},
 		#{userId},
 		#{lessionId},
 		#{type}
 		)
 	</insert>
-
+	
 	<select id="countComplete" resultType="int">
 		SELECT
 		count(1)
 		FROM
 		studio_info
 		WHERE
-		user_id IN (
+		type = 1
+		AND lession_id = #{lessionId} AND del_flag=#{DEL_FLAG_NORMAL}
+	</select>
+
+	<select id="countComplete1" resultType="int">
+		SELECT
+		count(1)
+		FROM
+		studio_info
+		WHERE
+		type = 1
+		AND lession_id = #{lessionId} AND del_flag=#{DEL_FLAG_NORMAL}
+		AND user_id IN (
 		SELECT
 		user_id
 		FROM
 		studio_info
 		WHERE
-		lession_id = #{lessionId} and del_flag=#{DEL_FLAG_NORMAL} and (select
-		count(1)
-		FROM
-		studio_info
-		WHERE
-		lession_id = #{lessionId} and del_flag=#{DEL_FLAG_NORMAL}
-		) = 2
+		type = 0
+		AND del_flag = #{DEL_FLAG_NORMAL}
+		AND lession_id = #{lessionId}
+		GROUP BY
+		user_id
 		)
 	</select>
 </mapper>

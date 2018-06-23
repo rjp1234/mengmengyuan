@@ -33,9 +33,19 @@ public class LessionPageInfo {
 
     private boolean readState;// 朗读状态
 
+    private int completeNum;// 完成人数
+
     public static final int STATE_COMPLETE = 1;
 
     public static final int STATE_UNFINISHED = 0;
+
+    public int getCompleteNum() {
+        return completeNum;
+    }
+
+    public void setCompleteNum(int completeNum) {
+        this.completeNum = completeNum;
+    }
 
     public boolean isReciteState() {
         return reciteState;

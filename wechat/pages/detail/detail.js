@@ -240,6 +240,7 @@ Page({
     var ApiUrl = Api.studioUpload;
     var mUserInfo = wx.getStorageSync("mUserInfo");
     var studioType = '';
+    var lessionId=that.data.lessionId;
     if (!that.data.type) {
       studioType = '0'
     } else {
@@ -253,7 +254,7 @@ Page({
         userId: mUserInfo.userId,
         accToken: mUserInfo.accToken,
         lessionId: that.data.lessionId,
-        type: studioType
+        type: 1
       },
       header: {
         'content-type': 'multipart/form-data'
@@ -264,15 +265,15 @@ Page({
         if (data.code == '0') {
           console.log('上传成功');
           //如果之前有一次成功完成的记录，那么算上本次就全部完成了
-          if (that.data.detail.readState || that.data.detail.reciteState) {
+         //if (that.data.detail.readState || that.data.detail.reciteState) {
             //弹出选择，留在本页还是跳转列表页面
             that.setData({
               completeHidden: false
             })
-          }
-
+        //  }
+          console.log("that.data.lesssionId" + lessionId)
           //上传录音伴随着状态改变，需要重新加载页面
-          that.fetchData(that.data.lesssionId);
+          that.fetchData(lessionId);
           //上传成功后清除本地studio的信息
           that.setData({
             studioSrc: null
@@ -455,11 +456,12 @@ Page({
     /**
      * 测试使用
      */
-    id = 'eb7d73d421a94b8a81c9ff0fbcd81385';
+ 
     that.setData({
       hidden: false,
       lessionId: id
     });
+    console.log(that.data.lessionId)
     var mUserInfo = wx.getStorageSync("mUserInfo");
     app.globalData.userInfo = mUserInfo;
     if (!mUserInfo) {
@@ -474,10 +476,10 @@ Page({
       if (res.code == '0') {
         //请求成功
         var detail = res.data.detail;
-
+        console.log(detail);
         that.setData({
           detail: detail,
-          //隐藏转圈圈
+          //隐藏转圈圈S
           hidden: true
 
         });

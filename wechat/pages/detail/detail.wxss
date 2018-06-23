@@ -28,7 +28,6 @@
   flex: 1;
 }
 
-
 .detail-collect-item{
   width: 100rpx;
   height: 55rpx;

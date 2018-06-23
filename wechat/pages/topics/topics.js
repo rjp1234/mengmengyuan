@@ -26,15 +26,23 @@ Page({
         url: '../index/index'
       })
     }
+    this.setData({
+      pageNo: 1,
+      pageSize: 20,
+      postsList: [],
+      all: false
+
+    })
+    this.getData();
   },
   onLoad: function () {
-    this.getData();
+   
   },
 
   onPullDownRefresh: function () {
     this.setData({
       pageNo: 1,
-      pageSize: 2,
+      pageSize: 20,
       postsList: [],
       all: false
 

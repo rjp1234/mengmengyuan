@@ -110,10 +110,13 @@ public class LessionInfoController extends BaseController {
             lessionPage.setId(lession.getId());
             lessionPage.setImage(lession.getImage());
             lessionPage.setName(lession.getName());
-            lessionPage.setReadNum(studioService.countStudio(null, lession.getId(), StudioInfo.TYPE_READ));// 获取课文总朗读次数
+            // lessionPage.setReadNum(studioService.countStudio(null,
+            // lession.getId(), StudioInfo.TYPE_READ));// 获取课文总朗读次数
             lessionPage.setReciteNum(studioService.countStudio(null, lession.getId(), StudioInfo.TYPE_RECITE));// 获取课文总背诵次数
-            lessionPage.setReadState(studioService.countStudio(userId, lession.getId(), StudioInfo.TYPE_READ) > 0);// 获取当前用户对该课文的朗读完成状态
+            // lessionPage.setReadState(studioService.countStudio(userId,
+            // lession.getId(), StudioInfo.TYPE_READ) > 0);// 获取当前用户对该课文的朗读完成状态
             lessionPage.setReciteState(studioService.countStudio(userId, lession.getId(), StudioInfo.TYPE_RECITE) > 0);
+            lessionPage.setCompleteNum(studioService.countComplete(lession.getId()));
             String issueTime = bindService.get(lession.getId(), classId).getCreateTime();
             int start = issueTime.indexOf(".");
             lessionPage.setIssueTime(issueTime.substring(0, start));
@@ -178,12 +181,13 @@ public class LessionInfoController extends BaseController {
             detail.setName(lession.getName());
             detail.setContent(StringEscapeUtils.unescapeHtml(lession.getContent()));
             detail.setImage(lession.getImage());
-            detail.setCompleteNum(studioService.countComplete(lessionId));
+            // detail.setCompleteNum(studioService.countComplete(lessionId));
             detail.setIssueTime(bind.getCreateTime().substring(0, bind.getCreateTime().indexOf(".")));
             detail.setExampleUrl(lession.getExampleUrl());
             detail.settContent(StringEscapeUtils.unescapeHtml(lession.gettContent()));
             detail.settStudioUrl(lession.gettStudioUrl());
-            detail.setReadState(studioService.countStudio(userId, lessionId, StudioInfo.TYPE_READ) > 0);
+            // detail.setReadState(studioService.countStudio(userId, lessionId,
+            // StudioInfo.TYPE_READ) > 0);
             detail.setReciteState(studioService.countStudio(userId, lessionId, StudioInfo.TYPE_RECITE) > 0);
             detail.setCreater(teacherService.getTNameById(lession.getCreater()));
         } catch (Exception e) {

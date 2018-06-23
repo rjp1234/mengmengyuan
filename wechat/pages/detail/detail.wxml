@@ -68,9 +68,9 @@
     <!--audio end-->
   </view>
   <view class="button-select">
-    <button wx:if="{{!detail.readState}}" class='btn' size="mini" hidden='{{readHidden}}' bindtap='read'>{{read}}</button>
+    <!-- <button wx:if="{{!detail.readState}}" class='btn' size="mini" hidden='{{readHidden}}' bindtap='read'>{{read}}</button> -->
     <button wx:if="{{!detail.reciteState}}" class='btn' size="mini" hidden='{{reciteHidden}}' bindtap='recite'>{{recite}}</button>
-    <button wx:if="{{detail.readState&&detail.reciteState}}" bindtap='back'>返回列表</button>
+    <button wx:if="{{detail.reciteState}}" bindtap='back'>返回列表</button>
   </view>
 
 
