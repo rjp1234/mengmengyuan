@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: mengmengyuan
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Administrator
+Implementation-Vendor-Id: com.mengmengyuan
+Build-Jdk: 1.8.0_112
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/mengmengyuan
+Created-By: Maven Integration for Eclipse
+
