@@ -368,7 +368,7 @@ Page({
       /**
        * 直接还原初始设置
        */
-      studioSrc: '', //学生录音的url
+     
       author: '',
       contentHidden: false,
       exampleHidden: false,

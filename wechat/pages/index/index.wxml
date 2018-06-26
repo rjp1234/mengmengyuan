@@ -43,9 +43,11 @@
   </view>
   <view class="about" wx:if="{{islogin == true}}">
     <view class="about-item">
-      <text class="about-item-title" wx:if="{{userInfo.nickname}}">欢迎你，{{userInfo.nickname}}.
-      你最近的登录时间是{{userInfo.lastLoginTime}}</text>
-      <text class="about-item-title" wx:elif="{{userInfo.loginname}}">欢迎你，{{userInfo.loginname}}.
+      <text class="about-item-title" wx:if="{{userInfo.nickname}}">欢迎你，{{userInfo.nickname}}
+   </text>
+      <text class="about-item-title" wx:elif="{{userInfo.loginname}}">欢迎你，{{userInfo.loginname}}
+     </text>
+     <text  class="about-item-title" wx:if="{{userInfo.lastLoginTime!=null}}"> 
       你最近的登录时间是{{userInfo.lastLoginTime}}</text>
       <text class="about-item-title" wx:if="{{userInfo.phonenum}}">你当前的手机号为{{userInfo.phonenum}}</text>
       <view class="view-cell view-cell-line" wx:if="{{islogin == true}}">
