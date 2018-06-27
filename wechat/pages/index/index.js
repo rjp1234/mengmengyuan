@@ -26,6 +26,7 @@ Page({
     }else{
       that.setData({ islogin: false });
     }
+   
     that.setData({
         userInfo:CuserInfo
     })
