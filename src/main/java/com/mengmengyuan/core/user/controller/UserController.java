@@ -176,7 +176,6 @@ public class UserController extends BaseController {
         data.put("reciteTime", reciteTime);
         data.put("sumPoint", sumPoint);
         data.put("avgPoint", avgPoint);
-
         return ApiResponse.successMessage(data);
     }
 
