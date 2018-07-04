@@ -17,7 +17,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +27,6 @@ import com.mengmengyuan.common.ReturnConstants;
 import com.mengmengyuan.core.base.ApiResponse;
 import com.mengmengyuan.core.base.BaseController;
 import com.mengmengyuan.core.base.teacher.service.TeacherService;
-import com.mengmengyuan.core.lession.entity.LessionClassBindInfo;
 import com.mengmengyuan.core.lession.entity.LessionDetailPageInfo;
 import com.mengmengyuan.core.lession.entity.LessionInfo;
 import com.mengmengyuan.core.lession.entity.LessionPageInfo;
@@ -139,60 +137,36 @@ public class LessionInfoController extends BaseController {
     @RequestMapping("lessionForm")
     public ApiResponse lessionForm(HttpServletRequest request, HttpServletResponse response) {
         String lessionId = request.getParameter("lessionId");
+
         String userId = request.getParameter("userId");
-        UserInfo user = null;
-        String classId = null;
-
-        // 获取用户信息(班级id)
-        try {
-            user = userService.getById(userId);
-            classId = user.getClassId();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-
         if (StringUtils.isBlank(lessionId)) {
             return ApiResponse.failMessage(ReturnConstants.ERROR_LESSION_ID_INVALID, "lession id is empty");
         }
-        LessionInfo lession = null;
-        try {
-            lession = lessionInfoService.getById(lessionId);
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-        if (lession == null) {
-            return ApiResponse.failMessage(ReturnConstants.ERROR_LESSION_ID_INVALID, "该课文不存在");
-        }
-        LessionClassBindInfo bind = null;
-        try {
-            bind = bindService.get(lessionId, classId);
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-        if (bind == null) {
-            return ApiResponse.failMessage(ReturnConstants.ERROR_LESSION_IS_NOT_ISSUE, "lession is not issue");
+        LessionDetailPageInfo lessionDetailPageInfo = new LessionDetailPageInfo();
 
-        }
+        LessionDetailPageInfo detail = lessionInfoService.getLessionDetailPageInfoByLessionIdAndUserId(lessionId,
+                userId);
 
-        LessionDetailPageInfo detail = new LessionDetailPageInfo();
-        try {
-            // 组装课文返回对象
-            detail.setId(lession.getId());
-            detail.setName(lession.getName());
-            detail.setContent(StringEscapeUtils.unescapeHtml(lession.getContent()));
-            detail.setImage(lession.getImage());
-            // detail.setCompleteNum(studioService.countComplete(lessionId));
-            detail.setIssueTime(bind.getCreateTime().substring(0, bind.getCreateTime().indexOf(".")));
-            detail.setExampleUrl(lession.getExampleUrl());
-            detail.settContent(StringEscapeUtils.unescapeHtml(lession.gettContent()));
-            detail.settStudioUrl(lession.gettStudioUrl());
-            // detail.setReadState(studioService.countStudio(userId, lessionId,
-            // StudioInfo.TYPE_READ) > 0);
-            detail.setReciteState(studioService.countStudio(userId, lessionId, StudioInfo.TYPE_RECITE) > 0);
-            detail.setCreater(teacherService.getTNameById(lession.getCreater()));
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
+        // try {
+        // // 组装课文返回对象
+        // detail.setId(lession.getId());
+        // detail.setName(lession.getName());
+        // detail.setContent(StringEscapeUtils.unescapeHtml(lession.getContent()));
+        // detail.setImage(lession.getImage());
+        // // detail.setCompleteNum(studioService.countComplete(lessionId));
+        // detail.setIssueTime(bind.getCreateTime().substring(0,
+        // bind.getCreateTime().indexOf(".")));
+        // detail.setExampleUrl(lession.getExampleUrl());
+        // detail.settContent(StringEscapeUtils.unescapeHtml(lession.gettContent()));
+        // detail.settStudioUrl(lession.gettStudioUrl());
+        // // detail.setReadState(studioService.countStudio(userId, lessionId,
+        // // StudioInfo.TYPE_READ) > 0);
+        // detail.setReciteState(studioService.countStudio(userId, lessionId,
+        // StudioInfo.TYPE_RECITE) > 0);
+        // detail.setCreater(teacherService.getTNameById(lession.getCreater()));
+        // } catch (Exception e) {
+        // logger.error(e.getMessage(), e);
+        // }
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("detail", detail);
         return ApiResponse.successMessage(data);

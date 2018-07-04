@@ -21,6 +21,8 @@ package com.mengmengyuan.core.lession.entity;
 public class LessionDetailPageInfo {
     private String id;
 
+    private String userId;
+
     private String name;// 课文名称
 
     private String issueTime;// 下发时间
@@ -46,6 +48,14 @@ public class LessionDetailPageInfo {
     public static final boolean STATE_COMPLETE = true;// 状态完成
 
     public static final boolean STATE_UNFINISHED = false;// 状态未完成
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getCreater() {
         return creater;

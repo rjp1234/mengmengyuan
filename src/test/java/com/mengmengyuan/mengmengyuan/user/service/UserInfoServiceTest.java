@@ -11,8 +11,6 @@ package com.mengmengyuan.mengmengyuan.user.service;
 
 import static org.junit.Assert.assertEquals;
 
-import java.sql.Date;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -49,7 +47,7 @@ public class UserInfoServiceTest extends BaseTest {
         userInfo.setPassword(MD5Utils.MD5("940213"));
         userInfo.setLoginName("renjianping");
         userInfo.setNickname("renjianping");
-        userInfo.setLoginDate(new Date(System.currentTimeMillis()));
+        // userInfo.setLoginDate(new Date(System.currentTimeMillis()));
         userInfo.setUserType(UserInfo.USER_TYPE_LOCAL_STUDENT);
         // service.regist(userInfo);
     }
