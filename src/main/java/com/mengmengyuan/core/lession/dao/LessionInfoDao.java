@@ -14,6 +14,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.mengmengyuan.core.base.BaseDao;
+import com.mengmengyuan.core.lession.entity.LessionDetailPageInfo;
 import com.mengmengyuan.core.lession.entity.LessionInfo;
 
 /**
@@ -40,5 +41,12 @@ public interface LessionInfoDao extends BaseDao<LessionInfo> {
      * 
      */
     int countLession(LessionInfo lession);
+
+    /**
+     * 
+     * getLessionDetailPageInfoByLessionIdAndUserId(这里用一句话描述这个方法的作用)
+     * 
+     */
+    LessionDetailPageInfo getLessionDetailPageInfoByLessionIdAndUserId(LessionDetailPageInfo detail);
 
 }

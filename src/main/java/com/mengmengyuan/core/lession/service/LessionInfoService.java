@@ -98,7 +98,9 @@ public class LessionInfoService extends BaseService {
      */
     public LessionDetailPageInfo getLessionDetailPageInfoByLessionIdAndUserId(String lessionId, String userId) {
         LessionDetailPageInfo detail = new LessionDetailPageInfo();
-        return lessionDao.getLessionDetailPageInfoByLessionIdAndUserId();
+        detail.setId(lessionId);
+        detail.setUserId(userId);
+        return lessionDao.getLessionDetailPageInfoByLessionIdAndUserId(detail);
     }
 
 }

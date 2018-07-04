@@ -17,6 +17,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -142,11 +143,16 @@ public class LessionInfoController extends BaseController {
         if (StringUtils.isBlank(lessionId)) {
             return ApiResponse.failMessage(ReturnConstants.ERROR_LESSION_ID_INVALID, "lession id is empty");
         }
-        LessionDetailPageInfo lessionDetailPageInfo = new LessionDetailPageInfo();
+        LessionDetailPageInfo detail = new LessionDetailPageInfo();
+        try {
 
-        LessionDetailPageInfo detail = lessionInfoService.getLessionDetailPageInfoByLessionIdAndUserId(lessionId,
-                userId);
-
+            detail = lessionInfoService.getLessionDetailPageInfoByLessionIdAndUserId(lessionId, userId);
+            detail.setContent(StringEscapeUtils.unescapeHtml(detail.getContent()));
+            detail.settContent(StringEscapeUtils.unescapeHtml(detail.gettContent()));
+            detail.setCreater(teacherService.getTNameById(detail.getCreater()));
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
         // try {
         // // 组装课文返回对象
         // detail.setId(lession.getId());
