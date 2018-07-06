@@ -9,6 +9,8 @@
  */
 package com.mengmengyuan.core.lession.entity;
 
+import com.mengmengyuan.core.base.BaseEntity;
+
 /**
  * 
  * 项目名称：mengmengyuan 类名称：LessionDetailPageInfo 类描述： 创建人：Administrator
@@ -18,8 +20,7 @@ package com.mengmengyuan.core.lession.entity;
  * 
  *          进入课文详细页面后的课文显示信息
  */
-public class LessionDetailPageInfo {
-    private String id;
+public class LessionDetailPageInfo extends BaseEntity {
 
     private String userId;
 
@@ -97,14 +98,6 @@ public class LessionDetailPageInfo {
         this.content = content;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public int getCompleteNum() {
         return completeNum;
     }
@@ -151,14 +144,6 @@ public class LessionDetailPageInfo {
 
     public void setReadState(boolean readState) {
         this.readState = readState;
-    }
-
-    @Override
-    public String toString() {
-        return "LessionDetailPageInfo [id=" + id + ", name=" + name + ", issueTime=" + issueTime + ", content="
-                + content + ", completeNum=" + completeNum + ", exampleUrl=" + exampleUrl + ", tContent=" + tContent
-                + ", tStudioUrl=" + tStudioUrl + ", reciteState=" + reciteState + ", readState=" + readState
-                + ", image=" + image + ", creater=" + creater + "]";
     }
 
 }

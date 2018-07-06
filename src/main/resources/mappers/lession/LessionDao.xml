@@ -50,7 +50,7 @@
 		content,
 		image,
 		( SELECT count( 1 ) FROM studio_info WHERE type = 1 AND lession_id =
-		li.id AND del_flag = '0' ) AS completeNum,
+		li.id AND del_flag =  #{DEL_FLAG_NORMAL}) AS completeNum,
 		lcb.create_time AS issueTime,
 		li.example_url AS exampleUrl,
 		li.t_studio_url AS tStudioUrl,
@@ -70,7 +70,7 @@
 		li.id
 		WHERE
 		li.del_flag = #{DEL_FLAG_NORMAL} AND lcb.del_flag=#{DEL_FLAG_NORMAL}
-		where li.id=#{id}
+		AND li.id=#{id}
 
 	</select>
 </mapper>
