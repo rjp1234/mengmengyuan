@@ -144,6 +144,7 @@ public class LessionInfoController extends BaseController {
             return ApiResponse.failMessage(ReturnConstants.ERROR_LESSION_ID_INVALID, "lession id is empty");
         }
         LessionDetailPageInfo detail = new LessionDetailPageInfo();
+        detail.setContent("页面加载出错，请联系管理员解决");
         try {
 
             detail = lessionInfoService.getLessionDetailPageInfoByLessionIdAndUserId(lessionId, userId);
@@ -154,30 +155,10 @@ public class LessionInfoController extends BaseController {
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
-        // try {
-        // // 组装课文返回对象
-        // detail.setId(lession.getId());
-        // detail.setName(lession.getName());
-        // detail.setContent(StringEscapeUtils.unescapeHtml(lession.getContent()));
-        // detail.setImage(lession.getImage());
-        // // detail.setCompleteNum(studioService.countComplete(lessionId));
-        // detail.setIssueTime(bind.getCreateTime().substring(0,
-        // bind.getCreateTime().indexOf(".")));
-        // detail.setExampleUrl(lession.getExampleUrl());
-        // detail.settContent(StringEscapeUtils.unescapeHtml(lession.gettContent()));
-        // detail.settStudioUrl(lession.gettStudioUrl());
-        // // detail.setReadState(studioService.countStudio(userId, lessionId,
-        // // StudioInfo.TYPE_READ) > 0);
-        // detail.setReciteState(studioService.countStudio(userId, lessionId,
-        // StudioInfo.TYPE_RECITE) > 0);
-        // detail.setCreater(teacherService.getTNameById(lession.getCreater()));
-        // } catch (Exception e) {
-        // logger.error(e.getMessage(), e);
-        // }
+
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("detail", detail);
         return ApiResponse.successMessage(data);
-
     }
 
 }

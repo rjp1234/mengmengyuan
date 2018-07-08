@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mengmengyuan.core.user.dao.UserDetailDao">
+	<select id="getUserRankDetailPageInfoByUserId" resultType="UserRankDetailPageInfo">
+	SELECT
+	id,
+	realname as name,
+	( SELECT count( 1 ) FROM studio_info WHERE user_id = u.id AND del_flag = #{DEL_FLAG_NORMAL} ) AS completeNum,
+	(SELECT count(1) from lession_class_bind where class_id=u.class_id and del_flag=#{DEL_FLAG_NORMAL}) AS issueNum,
+	IFNULL( ( SELECT sum( point ) FROM studio_info WHERE user_id = u.id AND del_flag = #{DEL_FLAG_NORMAL} ), 0 ) AS sumPoint,
+	IFNULL (
+		( SELECT avg( point ) FROM studio_info WHERE user_id = u.id AND del_flag = #{DEL_FLAG_NORMAL} AND pointer IS NOT NULL ),
+		0 
+	) AS avgPoint,
+	( SELECT count( 1 ) FROM studio_info WHERE user_id = u.id AND del_flag = #{DEL_FLAG_NORMAL} AND point &gt;= 8 ) AS aNum,
+	( SELECT count( 1 ) FROM studio_info WHERE user_id = u.id AND del_flag = #{DEL_FLAG_NORMAL} AND point &gt;= 4 AND point  &lt;  7 ) AS pNum,
+	( SELECT count( 1 ) FROM studio_info WHERE user_id = u.id AND del_flag = #{DEL_FLAG_NORMAL} AND point &gt;= 0 AND point  &lt;  3 ) AS eNum,
+	(
+	SELECT
+		count( 1 ) 
+	FROM
+		`user` u2 
+	WHERE
+		class_id = u.class_id 
+		AND del_flag = #{DEL_FLAG_NORMAL} 
+		AND ( SELECT avg( point ) FROM studio_info WHERE user_id = u2.id AND del_flag = #{DEL_FLAG_NORMAL} AND pointer IS NOT NULL ) &gt; avgPoint 
+	) AS ranking,
+	( SELECT count( 1 ) FROM `user` WHERE class_id = u.class_id AND del_flag = #{DEL_FLAG_NORMAL} ) AS classmateNum,
+	(
+	SELECT
+		realname 
+	FROM
+		`user` u2 
+	WHERE
+		class_id = u.class_id 
+		AND del_flag = #{DEL_FLAG_NORMAL} 
+		AND ( SELECT avg( point ) FROM studio_info WHERE user_id = u2.id AND del_flag = #{DEL_FLAG_NORMAL} AND pointer IS NOT NULL ) &gt; avgPoint 
+	ORDER BY
+		( SELECT avg( point ) FROM studio_info WHERE user_id = u2.id AND del_flag = #{DEL_FLAG_NORMAL} AND pointer IS NOT NULL ) ASC 
+		LIMIT 0,
+		1 
+	)  as frontRunnerName,
+	(select point_time from studio_info where user_id=u.id and del_flag =#{DEL_FLAG_NORMAL} and pointer is not null order by point_time desc limit 0 ,1) as lastPointTime 
+FROM
+	`user` u 
+WHERE
+	del_flag = #{DEL_FLAG_NORMAL} AND id=#{id}
+	</select>
+</mapper>

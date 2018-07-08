@@ -9,6 +9,7 @@
  */
 package com.mengmengyuan.common.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -60,6 +61,15 @@ public class TimeUtils {
      */
     public static String formateNowDay2() {
         return sdf1.format(new Date());
+    }
+
+    public synchronized static Date parseTime(String time) {
+        try {
+            return sdf1.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date();
     }
 
 }

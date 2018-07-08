@@ -67,7 +67,7 @@
 		FROM
 		lession_info li
 		JOIN lession_class_bind lcb ON lcb.lession_id =
-		li.id
+		li.id AND lcb.class_id=(select class_id from user where id=#{userId} and del_flag=#{DEL_FLAG_NORMAL})
 		WHERE
 		li.del_flag = #{DEL_FLAG_NORMAL} AND lcb.del_flag=#{DEL_FLAG_NORMAL}
 		AND li.id=#{id}
