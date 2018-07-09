@@ -87,7 +87,8 @@
 		li. NAME as 	`name`,
 		si.create_time AS createTime,
 		si.`comment` as comment,
-		si.point as point
+		si.point as point,
+		si.point_time as pointTime
 		FROM
 		studio_info si
 		JOIN lession_info li ON li.id = si.lession_id

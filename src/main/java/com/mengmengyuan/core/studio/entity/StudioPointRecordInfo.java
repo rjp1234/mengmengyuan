@@ -22,6 +22,8 @@ import com.mengmengyuan.core.base.BaseEntity;
 public class StudioPointRecordInfo extends BaseEntity {
     private String userId;
 
+    private String name;
+
     private String lessionId;
 
     private String createTime;
@@ -33,6 +35,25 @@ public class StudioPointRecordInfo extends BaseEntity {
     private int point;
 
     private int size;// 分页参数
+
+    /**
+     * name
+     * 
+     * @return the name
+     * @since CodingExample Ver(编码范例查看) 1.0
+     */
+
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name
+     *            the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getSize() {
         return size;

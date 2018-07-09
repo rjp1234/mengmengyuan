@@ -54,6 +54,20 @@ public class TimeUtils {
     }
 
     /**
+     * turnFormat1
+     * 
+     * yyyy-MM-dd HH:mm:ss.SSS ->yyyy-MM-dd HH:mm:ss
+     */
+    public static String turnFormat1(String time) {
+
+        return time.substring(0, time.indexOf("."));
+    }
+
+    public static void main(String[] args) throws Exception {
+        System.out.println(turnFormat1("2018-12-11 12:22:11.111"));
+    }
+
+    /**
      * 
      * formateNowDay2yyyy-MM-dd HH:mm:ss.SSS 返回当前日期
      * 

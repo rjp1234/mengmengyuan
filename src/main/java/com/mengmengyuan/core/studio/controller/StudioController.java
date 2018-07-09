@@ -128,8 +128,23 @@ public class StudioController extends BaseController {
 
         Map<String, Object> data = new HashMap<String, Object>();
         try {
+
             List<StudioPointRecordInfo> recordList = studioService.getUserStudioPointRecordList(userId, size, time);
+            for (StudioPointRecordInfo studioPointRecordInfo : recordList) {
+                try {
+
+                    studioPointRecordInfo.setCreateTime(TimeUtils.turnFormat1(studioPointRecordInfo.getCreateTime()));
+                    if (StringUtils.isNotBlank(studioPointRecordInfo.getPointTime())) {
+                        studioPointRecordInfo.setPointTime(TimeUtils.turnFormat1(studioPointRecordInfo.getPointTime()));
+                    }
+                } catch (Exception e) {
+                    logger.error(e.getMessage(), e);
+                }
+            }
+
             data.put("recordList", recordList);
+            data.put("time", recordList.get(recordList.size() - 1).getCreateTime());
+
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mengmengyuan.common.ReturnConstants;
+import com.mengmengyuan.common.util.TimeUtils;
 import com.mengmengyuan.core.base.ApiResponse;
 import com.mengmengyuan.core.base.BaseController;
 import com.mengmengyuan.core.base.teacher.service.TeacherService;
@@ -151,7 +152,7 @@ public class LessionInfoController extends BaseController {
             detail.setContent(StringEscapeUtils.unescapeHtml(detail.getContent()));
             detail.settContent(StringEscapeUtils.unescapeHtml(detail.gettContent()));
             detail.setCreater(teacherService.getTNameById(detail.getCreater()));
-            detail.setCreateTime(detail.getCreateTime().substring(0, detail.getCreateTime().indexOf(".")));
+            detail.setCreateTime(TimeUtils.turnFormat1(detail.getCreateTime()));
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
