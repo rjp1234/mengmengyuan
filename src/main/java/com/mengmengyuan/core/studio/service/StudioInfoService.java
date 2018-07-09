@@ -9,12 +9,15 @@
  */
 package com.mengmengyuan.core.studio.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mengmengyuan.core.base.BaseService;
 import com.mengmengyuan.core.studio.dao.StudioInfoDao;
 import com.mengmengyuan.core.studio.entity.StudioInfo;
+import com.mengmengyuan.core.studio.entity.StudioPointRecordInfo;
 
 /**
  * 
@@ -89,6 +92,26 @@ public class StudioInfoService extends BaseService {
         StudioInfo studio = new StudioInfo();
         studio.setLessionId(lessionId);
         return studioInfoDao.countComplete(studio);
+    }
+
+    /**
+     * 
+     * getUserStudioPointRecordList(这里用一句话描述这个方法的作用) 按照createTime排序
+     * 
+     * @param time
+     *            分割时间，返回createTime晚于该时间节点的信息
+     * @param size
+     *            分割量，返回不超过这个数量的信息
+     * 
+     * 
+     * 
+     */
+    public List<StudioPointRecordInfo> getUserStudioPointRecordList(String userId, int size, String time) {
+        StudioPointRecordInfo studioRecord = new StudioPointRecordInfo();
+        studioRecord.setUserId(userId);
+        studioRecord.setSize(size);
+        studioRecord.setCreateTime(time);
+        return studioInfoDao.getUserStudioPointRecordList(studioRecord);
     }
 
 }

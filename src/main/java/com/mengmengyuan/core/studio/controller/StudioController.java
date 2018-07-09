@@ -10,7 +10,10 @@
 package com.mengmengyuan.core.studio.controller;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +33,7 @@ import com.mengmengyuan.common.util.TimeUtils;
 import com.mengmengyuan.core.base.ApiResponse;
 import com.mengmengyuan.core.base.BaseController;
 import com.mengmengyuan.core.studio.entity.StudioInfo;
+import com.mengmengyuan.core.studio.entity.StudioPointRecordInfo;
 import com.mengmengyuan.core.studio.service.StudioInfoService;
 
 /**
@@ -109,6 +113,33 @@ public class StudioController extends BaseController {
 
     /**
      * 
+     * userStudioPointRecordList(1、 个人评分记录列表（依据课程名称分行） 列表包含内容： 课程名称、完成时间、评分、评语 )
+     * 
+     */
+    @RequestMapping("userStudioPointRecordList")
+    public ApiResponse userStudioPointRecordList(HttpServletRequest request, HttpServletResponse response) {
+        String userId = request.getParameter("userId");
+        String sizeStr = request.getParameter("size");
+        String time = request.getParameter("time");
+        int size = PAGE_SIZE;
+        if (StringUtils.isNumeric(sizeStr)) {
+            size = Integer.parseInt(sizeStr);
+        }
+
+        Map<String, Object> data = new HashMap<String, Object>();
+        try {
+            List<StudioPointRecordInfo> recordList = studioService.getUserStudioPointRecordList(userId, size, time);
+            data.put("recordList", recordList);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        return ApiResponse.successMessage(data);
+
+    }
+
+    /**
+     * 
      * getFileFromRequest(从微信请求中获取输入流）
      * 
      * 
@@ -125,7 +156,6 @@ public class StudioController extends BaseController {
             logger.error("", e);
         }
         return null;
-
     }
 
 }

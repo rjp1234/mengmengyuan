@@ -16,6 +16,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,8 +49,11 @@ public class UserDetailController extends BaseController {
         Map<String, Object> data = new HashMap<String, Object>();
         try {
             UserRankDetailPageInfo userDetail = userDetailService.getUserRankDetailPageInfoByUserId(userId);
-            Date date = TimeUtils.parseTime(userDetail.getLastPointTime());
-            userDetail.setLastPointTime(TimeUtils.formateDate(date));
+            Date date = new Date();
+            if (StringUtils.isNotBlank(userDetail.getLastPointTime())) {
+                date = TimeUtils.parseTime(userDetail.getLastPointTime());
+                userDetail.setLastPointTime(TimeUtils.formateDate(date));
+            }
             data.put("userDetail", userDetail);
             return ApiResponse.successMessage(data);
         } catch (Exception e) {
