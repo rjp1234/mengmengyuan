@@ -69,4 +69,10 @@ public interface StudioInfoDao extends BaseDao<StudioInfo> {
      */
     List<StudioPointRecordInfo> getUserStudioPointRecordList(StudioPointRecordInfo studioRecord);
 
+    /**
+     * 
+     * getByUserIdAndLessionId(这里用一句话描述这个方法的作用)
+     */
+    StudioInfo getByUserIdAndLessionId(StudioInfo studio);
+
 }
