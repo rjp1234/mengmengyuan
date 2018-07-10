@@ -32,9 +32,9 @@ import com.mengmengyuan.core.base.teacher.service.TeacherService;
 import com.mengmengyuan.core.lession.entity.LessionDetailPageInfo;
 import com.mengmengyuan.core.lession.entity.LessionInfo;
 import com.mengmengyuan.core.lession.entity.LessionPageInfo;
-import com.mengmengyuan.core.lession.entity.LessionRankingPageInfo;
 import com.mengmengyuan.core.lession.service.LessionClassBindService;
 import com.mengmengyuan.core.lession.service.LessionInfoService;
+import com.mengmengyuan.core.studio.entity.LessionRankingPageInfo;
 import com.mengmengyuan.core.studio.entity.StudioInfo;
 import com.mengmengyuan.core.studio.service.StudioInfoService;
 import com.mengmengyuan.core.user.entity.UserInfo;
@@ -154,6 +154,7 @@ public class LessionInfoController extends BaseController {
             detail.settContent(StringEscapeUtils.unescapeHtml(detail.gettContent()));
             detail.setCreater(teacherService.getTNameById(detail.getCreater()));
             detail.setCreateTime(TimeUtils.turnFormat1(detail.getCreateTime()));
+            detail.setIssueTime(TimeUtils.turnFormat1(detail.getIssueTime()));
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
@@ -173,26 +174,38 @@ public class LessionInfoController extends BaseController {
     public ApiResponse lessionRankingDetail(HttpServletRequest request, HttpServletResponse response) {
         String userId = request.getParameter("userId");
         String lessionId = request.getParameter("lessionId");
-        String sizeStr = request.getParameter("size");
-        String time = request.getParameter("time");
-        int size = 20;
-        if (StringUtils.isNumeric(sizeStr)) {
-            size = Integer.parseInt(sizeStr);
-
-        }
         List<LessionRankingPageInfo> rankList = new ArrayList<>();
         try {
 
-            rankList = lessionInfoService.getLessionRankingPageList(lessionId, userId, time, size);
+            rankList = studioService.getLessionRankingPageList(lessionId, userId);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
-        StudioInfo userStudio = studioService.getByUserIdAndLessionId(userId, lessionId);
+        StudioInfo userStudio = null;
+        try {
+
+            userStudio = studioService.getByUserIdAndLessionId(userId, lessionId);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+
+        LessionDetailPageInfo lession = new LessionDetailPageInfo();
+        try {
+            LessionDetailPageInfo l = lessionInfoService.getLessionDetailPageInfoByLessionIdAndUserId(lessionId,
+                    userId);
+            // 减轻数据传送压力
+            lession.setName(l.getName());
+            lession.setIssueTime(TimeUtils.turnFormat1(l.getIssueTime()));
+            lession.setImage(l.getImage());
+
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
 
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("time", rankList.get(rankList.size() - 1).getCreateTime());
         data.put("rankList", rankList);
-
+        data.put("studio", userStudio);
+        data.put("lession", lession);
         return ApiResponse.successMessage(data);
 
     }

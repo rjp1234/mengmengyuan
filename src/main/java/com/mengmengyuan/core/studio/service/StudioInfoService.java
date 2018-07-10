@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.mengmengyuan.core.base.BaseService;
 import com.mengmengyuan.core.studio.dao.StudioInfoDao;
+import com.mengmengyuan.core.studio.entity.LessionRankingPageInfo;
 import com.mengmengyuan.core.studio.entity.StudioInfo;
 import com.mengmengyuan.core.studio.entity.StudioPointRecordInfo;
 
@@ -116,7 +117,7 @@ public class StudioInfoService extends BaseService {
 
     /**
      * 
-     * getByUserIdAndLessionId(这里用一句话描述这个方法的作用)
+     * getByUserIdAndLessionId(根据用户id和课程id获取对应录音)
      * 
      * 
      */
@@ -124,8 +125,20 @@ public class StudioInfoService extends BaseService {
         StudioInfo studio = new StudioInfo();
         studio.setUserId(userId);
         studio.setLessionId(lessionId);
-
         return studioInfoDao.getByUserIdAndLessionId(studio);
+    }
+
+    /**
+     * 
+     * getLessionRankingPageList(获取某课文下用户排行榜数据)
+     * 
+     * 
+     */
+    public List<LessionRankingPageInfo> getLessionRankingPageList(String lessionId, String userId) {
+        LessionRankingPageInfo lessionRanking = new LessionRankingPageInfo();
+        lessionRanking.setLessionId(lessionId);
+        lessionRanking.setUserId(userId);
+        return studioInfoDao.getLessionRankingPageList(lessionRanking);
     }
 
 }

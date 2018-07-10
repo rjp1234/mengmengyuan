@@ -41,7 +41,28 @@ public class LessionInfo extends BaseEntity {
 
     private String createTime;// 创建时间
 
+    private String issueTime;
+
     private String classId;
+
+    /**
+     * issueTime
+     * 
+     * @return the issueTime
+     * @since CodingExample Ver(编码范例查看) 1.0
+     */
+
+    public String getIssueTime() {
+        return issueTime;
+    }
+
+    /**
+     * @param issueTime
+     *            the issueTime to set
+     */
+    public void setIssueTime(String issueTime) {
+        this.issueTime = issueTime;
+    }
 
     public String getClassId() {
         return classId;

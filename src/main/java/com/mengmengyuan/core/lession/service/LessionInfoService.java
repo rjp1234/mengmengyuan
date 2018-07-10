@@ -18,7 +18,6 @@ import com.mengmengyuan.core.base.BaseService;
 import com.mengmengyuan.core.lession.dao.LessionInfoDao;
 import com.mengmengyuan.core.lession.entity.LessionDetailPageInfo;
 import com.mengmengyuan.core.lession.entity.LessionInfo;
-import com.mengmengyuan.core.lession.entity.LessionRankingPageInfo;
 
 /**
  * 
@@ -75,24 +74,7 @@ public class LessionInfoService extends BaseService {
 
     /**
      * 
-     * getLessionDetailPageInfoByLessionIdAndUserId(这里用一句话描述这个方法的作用)
-     * 
-     * TODO(这里描述这个方法适用条件 – 可选)
-     * 
-     * TODO(这里描述这个方法的执行流程 – 可选)
-     * 
-     * TODO(这里描述这个方法的使用方法 – 可选)
-     * 
-     * TODO(这里描述这个方法的注意事项 – 可选)
-     * 
-     * @param name
-     * 
-     * @param @return
-     *            设定文件
-     * 
-     * @return String DOM对象
-     * 
-     * @Exception 异常对象
+     * getLessionDetailPageInfoByLessionIdAndUserId(获取某用户课程详情页面)
      * 
      * @since CodingExample Ver(编码范例查看) 1.1
      * 
@@ -102,22 +84,6 @@ public class LessionInfoService extends BaseService {
         detail.setId(lessionId);
         detail.setUserId(userId);
         return lessionDao.getLessionDetailPageInfoByLessionIdAndUserId(detail);
-    }
-
-    /**
-     * 
-     * getLessionRankingPageList(获取某课文下用户排行榜数据)
-     * 
-     * 
-     */
-    public List<LessionRankingPageInfo> getLessionRankingPageList(String lessionId, String userId, String time,
-            int size) {
-        LessionRankingPageInfo lessionRanking = new LessionRankingPageInfo();
-        lessionRanking.setLessionId(lessionId);
-        lessionRanking.setUserId(userId);
-        lessionRanking.setCreateTime(time);
-        lessionRanking.setLimit(size);
-        return null;
     }
 
 }

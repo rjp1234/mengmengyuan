@@ -84,17 +84,51 @@
 		SELECT
 		si.user_id as userId,
 		li.id AS lessionId,
-		li. NAME as 	`name`,
+		li. NAME as `name`,
 		si.create_time AS createTime,
 		si.`comment` as comment,
-		si.point as point,
+		si.point as
+		point,
 		si.point_time as pointTime
 		FROM
 		studio_info si
-		JOIN lession_info li ON li.id = si.lession_id
+		JOIN lession_info li
+		ON li.id = si.lession_id
 		WHERE
-		si.del_flag =  #{DEL_FLAG_NORMAL}
-		AND li.del_flag =  #{DEL_FLAG_NORMAL} AND si.create_time &gt;#{createTime} AND si.user_id=#{userId}
+		si.del_flag = #{DEL_FLAG_NORMAL}
+		AND
+		li.del_flag = #{DEL_FLAG_NORMAL} AND si.create_time &gt;#{createTime}
+		AND si.user_id=#{userId}
 		order by si.create_time desc limit 0, #{size}
 	</select>
+	<select id="getLessionRankingPageList" resultType="LessionRankingPageInfo">
+		SELECT
+		u.id AS
+		userId,
+		u.realname AS userName,
+		si.url AS studioUrl,
+		si.point AS point
+		FROM
+		studio_info AS si
+		JOIN `user` u ON u.id = si.user_id
+		AND u.del_flag = si.del_flag
+		JOIN
+		lession_info li ON li.id = si.lession_id
+		WHERE
+		si.del_flag =
+		#{DEL_FLAG_NORMAL}
+		AND pointer IS NOT NULL AND li.id=#{lessionId} AND
+		u.id=#{userId}
+		ORDER BY
+		point DESC,
+		si.create_time ASC LIMIT 0,10
+	</select>
+	<select id="getByUserIdAndLessionId" resultType="StudioInfo">
+		select *,(select
+		count(1) from studio_info where pointer is not null and point &gt;
+		IFNULL(si.point,0) AND lession_id=#{lessionId} and del_flag =#{DEL_FLAG_NORMAL}) as ranking from studio_info
+		si join lession_info li on li.id=si.lession_id  where  si.user_id =#{userId} AND si.lession_id=#{lessionId} AND
+		si.del_flag=#{DEL_FLAG_NORMAL}
+	</select>
+
 </mapper>

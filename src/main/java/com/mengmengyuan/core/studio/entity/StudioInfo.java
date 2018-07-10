@@ -34,9 +34,30 @@ public class StudioInfo extends BaseEntity {
 
     private String type;// 类型：0、朗读。1、背诵
 
+    private int ranking;// 名次
+
     public static final String TYPE_READ = "0";// 朗读
 
     public static final String TYPE_RECITE = "1";// 背诵
+
+    /**
+     * ranking
+     * 
+     * @return the ranking
+     * @since CodingExample Ver(编码范例查看) 1.0
+     */
+
+    public int getRanking() {
+        return ranking;
+    }
+
+    /**
+     * @param ranking
+     *            the ranking to set
+     */
+    public void setRanking(int ranking) {
+        this.ranking = ranking;
+    }
 
     public String getType() {
         return type;

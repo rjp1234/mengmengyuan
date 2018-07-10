@@ -14,6 +14,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.mengmengyuan.core.base.BaseDao;
+import com.mengmengyuan.core.studio.entity.LessionRankingPageInfo;
 import com.mengmengyuan.core.studio.entity.StudioInfo;
 import com.mengmengyuan.core.studio.entity.StudioPointRecordInfo;
 
@@ -71,8 +72,16 @@ public interface StudioInfoDao extends BaseDao<StudioInfo> {
 
     /**
      * 
-     * getByUserIdAndLessionId(这里用一句话描述这个方法的作用)
+     * getByUserIdAndLessionId(根据用户id和课程id获取对应的录音信息)
      */
     StudioInfo getByUserIdAndLessionId(StudioInfo studio);
+
+    /**
+     * 
+     * getLessionRankingPageList(获取某篇课文下的排行列表 （不允许未打分用户上榜）)
+     * 
+     * 
+     */
+    List<LessionRankingPageInfo> getLessionRankingPageList(LessionRankingPageInfo lessionRanking);
 
 }

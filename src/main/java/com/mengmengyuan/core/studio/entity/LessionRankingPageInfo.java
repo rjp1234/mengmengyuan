@@ -7,7 +7,7 @@
  * 版权所有    
  *    
  */
-package com.mengmengyuan.core.lession.entity;
+package com.mengmengyuan.core.studio.entity;
 
 import com.mengmengyuan.core.base.BaseEntity;
 
