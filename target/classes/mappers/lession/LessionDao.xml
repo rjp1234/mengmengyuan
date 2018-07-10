@@ -25,7 +25,7 @@
 		select * from lession_info where
 		id=#{id} and del_flag = #{DEL_FLAG_NORMAL}
 	</select>
-	<select id="countLession" resultType="int" > 
+	<select id="countLession" resultType="int">
 		SELECT
 		count(1)
 		FROM
@@ -41,6 +41,36 @@
 		AND del_flag =
 		#{DEL_FLAG_NORMAL}
 		)
+	</select>
+	<select id="getLessionDetailPageInfoByLessionIdAndUserId"
+		resultType="LessionDetailPageInfo">
+		SELECT
+		li.id,
+		`name`,
+		content,
+		image,
+		( SELECT count( 1 ) FROM studio_info WHERE type = 1 AND lession_id =
+		li.id AND del_flag =  #{DEL_FLAG_NORMAL}) AS completeNum,
+		lcb.create_time AS issueTime,
+		li.example_url AS exampleUrl,
+		li.t_studio_url AS tStudioUrl,
+		li.t_content AS tContent,
+		(
+		(SELECT
+		count( 1 )
+		FROM
+		studio_info
+		WHERE
+		lession_id = #{id} and user_id=#{userId} and
+		del_flag=#{DEL_FLAG_NORMAL}) &gt; 0) as reciteState , li.creater as creater
+
+		FROM
+		lession_info li
+		JOIN lession_class_bind lcb ON lcb.lession_id =
+		li.id AND lcb.class_id=(select class_id from user where id=#{userId} and del_flag=#{DEL_FLAG_NORMAL})
+		WHERE
+		li.del_flag = #{DEL_FLAG_NORMAL} AND lcb.del_flag=#{DEL_FLAG_NORMAL}
+		AND li.id=#{id}
 
 	</select>
 </mapper>

@@ -32,6 +32,7 @@ import com.mengmengyuan.core.base.teacher.service.TeacherService;
 import com.mengmengyuan.core.lession.entity.LessionDetailPageInfo;
 import com.mengmengyuan.core.lession.entity.LessionInfo;
 import com.mengmengyuan.core.lession.entity.LessionPageInfo;
+import com.mengmengyuan.core.lession.entity.LessionRankingPageInfo;
 import com.mengmengyuan.core.lession.service.LessionClassBindService;
 import com.mengmengyuan.core.lession.service.LessionInfoService;
 import com.mengmengyuan.core.studio.entity.StudioInfo;
@@ -160,6 +161,40 @@ public class LessionInfoController extends BaseController {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("detail", detail);
         return ApiResponse.successMessage(data);
+    }
+
+    /**
+     * 
+     * lessionRankingDetail(获取某课文下用户排行榜信息)
+     * 
+     * 
+     */
+    @RequestMapping("lessionRankingDetail")
+    public ApiResponse lessionRankingDetail(HttpServletRequest request, HttpServletResponse response) {
+        String userId = request.getParameter("userId");
+        String lessionId = request.getParameter("lessionId");
+        String sizeStr = request.getParameter("size");
+        String time = request.getParameter("time");
+        int size = 20;
+        if (StringUtils.isNumeric(sizeStr)) {
+            size = Integer.parseInt(sizeStr);
+
+        }
+        List<LessionRankingPageInfo> rankList = new ArrayList<>();
+        try {
+
+            rankList = lessionInfoService.getLessionRankingPageList(lessionId, userId, time, size);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        StudioInfo userStudio = studioService.getByUserIdAndLessionId(userId, lessionId);
+
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("time", rankList.get(rankList.size() - 1).getCreateTime());
+        data.put("rankList", rankList);
+
+        return ApiResponse.successMessage(data);
+
     }
 
 }

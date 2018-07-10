@@ -18,6 +18,7 @@ import com.mengmengyuan.core.base.BaseService;
 import com.mengmengyuan.core.lession.dao.LessionInfoDao;
 import com.mengmengyuan.core.lession.entity.LessionDetailPageInfo;
 import com.mengmengyuan.core.lession.entity.LessionInfo;
+import com.mengmengyuan.core.lession.entity.LessionRankingPageInfo;
 
 /**
  * 
@@ -101,6 +102,22 @@ public class LessionInfoService extends BaseService {
         detail.setId(lessionId);
         detail.setUserId(userId);
         return lessionDao.getLessionDetailPageInfoByLessionIdAndUserId(detail);
+    }
+
+    /**
+     * 
+     * getLessionRankingPageList(获取某课文下用户排行榜数据)
+     * 
+     * 
+     */
+    public List<LessionRankingPageInfo> getLessionRankingPageList(String lessionId, String userId, String time,
+            int size) {
+        LessionRankingPageInfo lessionRanking = new LessionRankingPageInfo();
+        lessionRanking.setLessionId(lessionId);
+        lessionRanking.setUserId(userId);
+        lessionRanking.setCreateTime(time);
+        lessionRanking.setLimit(size);
+        return null;
     }
 
 }

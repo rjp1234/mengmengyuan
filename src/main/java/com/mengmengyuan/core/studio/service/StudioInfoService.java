@@ -114,4 +114,18 @@ public class StudioInfoService extends BaseService {
         return studioInfoDao.getUserStudioPointRecordList(studioRecord);
     }
 
+    /**
+     * 
+     * getByUserIdAndLessionId(这里用一句话描述这个方法的作用)
+     * 
+     * 
+     */
+    public StudioInfo getByUserIdAndLessionId(String userId, String lessionId) {
+        StudioInfo studio = new StudioInfo();
+        studio.setUserId(userId);
+        studio.setLessionId(lessionId);
+
+        return studioInfoDao.getByUserIdAndLessionId(studio);
+    }
+
 }
