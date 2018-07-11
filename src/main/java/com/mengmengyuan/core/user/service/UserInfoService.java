@@ -10,6 +10,7 @@
 package com.mengmengyuan.core.user.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -194,5 +195,17 @@ public class UserInfoService extends BaseService {
         user.setId(IdGen.uuid());
         System.out.println(getJsonFromUserInfo(user));
         System.out.println(getUserInfoFromJson(getJsonFromUserInfo(user)));
+    }
+
+    /**
+     * 
+     * getByClassId(这里用一句话描述这个方法的作用)
+     * 
+     * 
+     */
+    public List<UserInfo> getByClassId(String classId) {
+        UserInfo user = new UserInfo();
+        user.setClassId(classId);
+        return userDao.getByClassId(user);
     }
 }

@@ -35,7 +35,7 @@
 		user_id,
 		lession_id,
 		type
-		)values(
+		) select
 		#{id},
 		#{url},
 		#{DEL_FLAG_NORMAL},
@@ -43,7 +43,9 @@
 		#{userId},
 		#{lessionId},
 		#{type}
-		)
+		from dual where not exists (select user_id,lession_id from studio_info
+		where user_id=#{userId} and lession_id=#{lessionId} and
+		del_flag=#{DEL_FLAG_NORMAL})
 	</insert>
 
 	<select id="countComplete" resultType="int">
@@ -111,23 +113,29 @@
 		FROM
 		studio_info AS si
 		JOIN `user` u ON u.id = si.user_id
-		AND u.del_flag = si.del_flag
+		AND u.del_flag
+		= si.del_flag
 		JOIN
 		lession_info li ON li.id = si.lession_id
 		WHERE
 		si.del_flag =
 		#{DEL_FLAG_NORMAL}
-		AND pointer IS NOT NULL AND li.id=#{lessionId} AND
-		u.id=#{userId}
+		AND pointer IS NOT NULL AND
+		li.id=#{lessionId} AND
+		u.id in (select id from user where class_id=(select class_id from user where id=#{userId}))
 		ORDER BY
 		point DESC,
-		si.create_time ASC LIMIT 0,10
+		si.create_time
+		ASC LIMIT 0,10
 	</select>
 	<select id="getByUserIdAndLessionId" resultType="StudioInfo">
 		select *,(select
 		count(1) from studio_info where pointer is not null and point &gt;
-		IFNULL(si.point,0) AND lession_id=#{lessionId} and del_flag =#{DEL_FLAG_NORMAL}) as ranking from studio_info
-		si join lession_info li on li.id=si.lession_id  where  si.user_id =#{userId} AND si.lession_id=#{lessionId} AND
+		IFNULL(si.point,0) AND lession_id=#{lessionId} and del_flag
+		=#{DEL_FLAG_NORMAL}) as ranking from studio_info
+		si join lession_info
+		li on li.id=si.lession_id where si.user_id =#{userId} AND
+		si.lession_id=#{lessionId} AND
 		si.del_flag=#{DEL_FLAG_NORMAL}
 	</select>
 

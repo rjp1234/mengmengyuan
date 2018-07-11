@@ -26,8 +26,6 @@ public class LessionRankingPageInfo extends BaseEntity {
 
     private String lessionId;// 课文id
 
-    private String lessionName;// 课文名称
-
     private String studioUrl;// 录音路径
 
     private int ranking;// 排名
@@ -64,14 +62,6 @@ public class LessionRankingPageInfo extends BaseEntity {
 
     public void setLessionId(String lessionId) {
         this.lessionId = lessionId;
-    }
-
-    public String getLessionName() {
-        return lessionName;
-    }
-
-    public void setLessionName(String lessionName) {
-        this.lessionName = lessionName;
     }
 
     public String getStudioUrl() {

@@ -11,12 +11,19 @@ package com.mengmengyuan.mengmengyuan.user.service;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mengmengyuan.common.util.IdGen;
 import com.mengmengyuan.common.util.MD5Utils;
+import com.mengmengyuan.common.util.TimeUtils;
 import com.mengmengyuan.common.util.redis.RedisUtils;
+import com.mengmengyuan.core.lession.entity.LessionInfo;
+import com.mengmengyuan.core.lession.service.LessionInfoService;
+import com.mengmengyuan.core.studio.entity.StudioInfo;
+import com.mengmengyuan.core.studio.service.StudioInfoService;
 import com.mengmengyuan.core.user.entity.UserInfo;
 import com.mengmengyuan.core.user.service.UserInfoService;
 import com.mengmengyuan.core.user.utils.UserUtils;
@@ -33,10 +40,16 @@ import com.mengmengyuan.mengmengyuan.BaseTest;
 public class UserInfoServiceTest extends BaseTest {
 
     @Autowired
-    UserInfoService service;
+    UserInfoService userService;
 
     @Autowired
     RedisUtils redisUtils;
+
+    @Autowired
+    StudioInfoService studioService;
+
+    @Autowired
+    LessionInfoService lessionService;
 
     @Test
     public void registTest() throws Exception {
@@ -56,7 +69,7 @@ public class UserInfoServiceTest extends BaseTest {
     public void getUserByLogin() {
         String password = "940213";
         String loginname = "renjianpng";
-        System.out.println(service.getUserByLogin(loginname, password));
+        System.out.println(userService.getUserByLogin(loginname, password));
 
     }
 
@@ -64,12 +77,12 @@ public class UserInfoServiceTest extends BaseTest {
     public void updateImage_test() throws Exception {
         String password = "940213";
         String loginname = "renjianping";
-        UserInfo user = service.getUserByLogin(loginname, password);
+        UserInfo user = userService.getUserByLogin(loginname, password);
         String originImage = user.getImage();
-        service.updateImage(user.getId(), "test");
+        userService.updateImage(user.getId(), "test");
         String image = (String) redisUtils.hmGet(UserUtils.USER_HASH_PREFIX + user.getId(), UserUtils.USER_HASH_IMAGE);
-        String image2 = service.getUserByLogin(loginname, password).getImage();
-        service.updateImage(user.getId(), originImage);
+        String image2 = userService.getUserByLogin(loginname, password).getImage();
+        userService.updateImage(user.getId(), originImage);
         assertEquals(image2, image);
     }
 
@@ -77,12 +90,33 @@ public class UserInfoServiceTest extends BaseTest {
     public void updateNickName_test() throws Exception {
         String password = "940213";
         String loginname = "renjianping";
-        UserInfo user = service.getUserByLogin(loginname, password);
+        UserInfo user = userService.getUserByLogin(loginname, password);
         String originNick = user.getNickname();
-        service.updateUserNick(user.getId(), "test");
+        userService.updateUserNick(user.getId(), "test");
         String nick1 = (String) redisUtils.hmGet(UserUtils.USER_HASH_PREFIX + user.getId(), UserUtils.USER_HASH_NICK);
-        String nick2 = service.getUserByLogin(loginname, password).getNickname();
-        service.updateUserNick(user.getId(), originNick);
+        String nick2 = userService.getUserByLogin(loginname, password).getNickname();
+        userService.updateUserNick(user.getId(), originNick);
         assertEquals(nick2, nick1);
+    }
+
+    @Test
+    public void insertStudio() {
+        String classId = "6fca230ed6b646059e7b5125e7c3d020";
+        List<UserInfo> list = userService.getByClassId(classId);
+        for (UserInfo userInfo : list) {
+            List<LessionInfo> lessionList = lessionService.getPage(userInfo.getClassId(), 1, 100);
+            for (LessionInfo lessionInfo : lessionList) {
+                StudioInfo studio = new StudioInfo();
+                studio.setId(IdGen.uuid());
+                studio.setLessionId(lessionInfo.getId());
+                studio.setCreateTime(TimeUtils.formateNowDay2());
+                studio.setUrl(
+                        "http://pa5vtka0q.bkt.clouddn.com/student/studio/2018/6/27/12fcbbed6c9844f18e560ef022468418.mp3");
+                studio.setType("1");
+                studio.setUserId(userInfo.getId());
+                // studioService.insert(studio);
+            }
+        }
+
     }
 }

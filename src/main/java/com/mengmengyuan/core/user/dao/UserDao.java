@@ -9,6 +9,8 @@
  */
 package com.mengmengyuan.core.user.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.mengmengyuan.core.base.BaseDao;
@@ -62,5 +64,13 @@ public interface UserDao extends BaseDao<UserInfo> {
      * 
      */
     public String getTextId(UserInfo userInfo);
+
+    /**
+     * 
+     * getByClassId(这里用一句话描述这个方法的作用)
+     * 
+     * 
+     */
+    public List<UserInfo> getByClassId(UserInfo user);
 
 }

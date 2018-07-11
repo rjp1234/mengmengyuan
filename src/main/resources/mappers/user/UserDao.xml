@@ -47,4 +47,7 @@
 		) and del_flag=#{DEL_FLAG_NORMAL}
 		) and del_flag=#{DEL_FLAG_NORMAL}
 	</select>
+	<select id="getByClassId" resultType="UserInfo">
+	SELECT * FROM user where class_id=#{classId} and del_flag=#{DEL_FLAG_NORMAL}
+	</select>
 </mapper>
