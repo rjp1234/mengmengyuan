@@ -54,19 +54,19 @@ public class TestController extends BaseController {
         return "hello mysql";
     }
 
-    @RequestMapping("test-redis")
-    @ResponseBody
-    public String testRedis() {
-        redisUtils.set("test", "123");
-        System.out.println(redisUtils.get("test"));
-        redisUtils.remove("test");
-        for (int i = 0; i < 10; i++) {
-            redisUtils.lPush("list-test", i);
-        }
-        System.out.println(redisUtils.lRange("list-test", 0, -1));
-        redisUtils.remove("list-test");
-        return "hello redis";
-    }
+    // @RequestMapping("test-redis")
+    // @ResponseBody
+    // public String testRedis() {
+    // redisUtils.set("test", "123");
+    // System.out.println(redisUtils.get("test"));
+    // redisUtils.remove("test");
+    // for (int i = 0; i < 10; i++) {
+    // redisUtils.lPush("list-test", i);
+    // }
+    // System.out.println(redisUtils.lRange("list-test", 0, -1));
+    // redisUtils.remove("list-test");
+    // return "hello redis";
+    // }
 
     public static void main(String[] args) {
         run(MengmengyuanApplication.class, args);

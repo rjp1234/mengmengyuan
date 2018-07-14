@@ -153,7 +153,7 @@ public class LessionInfoController extends BaseController {
             detail.setContent(StringEscapeUtils.unescapeHtml(detail.getContent()));
             detail.settContent(StringEscapeUtils.unescapeHtml(detail.gettContent()));
             detail.setCreater(teacherService.getTNameById(detail.getCreater()));
-            detail.setCreateTime(TimeUtils.turnFormat1(detail.getCreateTime()));
+            // detail.setCreateTime(TimeUtils.turnFormat1(detail.getCreateTime()));
             detail.setIssueTime(TimeUtils.turnFormat1(detail.getIssueTime()));
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

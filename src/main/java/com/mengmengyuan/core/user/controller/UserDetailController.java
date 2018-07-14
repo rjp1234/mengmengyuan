@@ -43,6 +43,12 @@ public class UserDetailController extends BaseController {
     @Autowired
     UserDetailService userDetailService;
 
+    /**
+     * 
+     * userDetail(学生的成绩单页面)
+     * 
+     * 
+     */
     @RequestMapping("userDetail")
     public ApiResponse userDetail(HttpServletRequest request, HttpServletResponse response) {
         String userId = request.getParameter("userId");
