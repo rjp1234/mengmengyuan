@@ -110,12 +110,8 @@ public class LessionInfoController extends BaseController {
             LessionPageInfo lessionPage = new LessionPageInfo();
             lessionPage.setId(lession.getId());
             lessionPage.setImage(lession.getImage());
-            lessionPage.setName(lession.getName());
-            // lessionPage.setReadNum(studioService.countStudio(null,
-            // lession.getId(), StudioInfo.TYPE_READ));// 获取课文总朗读次数
+            lessionPage.setName(StringEscapeUtils.unescapeHtml(lession.getName()));
             lessionPage.setReciteNum(studioService.countStudio(null, lession.getId(), StudioInfo.TYPE_RECITE));// 获取课文总背诵次数
-            // lessionPage.setReadState(studioService.countStudio(userId,
-            // lession.getId(), StudioInfo.TYPE_READ) > 0);// 获取当前用户对该课文的朗读完成状态
             lessionPage.setReciteState(studioService.countStudio(userId, lession.getId(), StudioInfo.TYPE_RECITE) > 0);
             lessionPage.setCompleteNum(studioService.countComplete(lession.getId()));
             String issueTime = bindService.get(lession.getId(), classId).getCreateTime();
@@ -150,6 +146,7 @@ public class LessionInfoController extends BaseController {
         try {
 
             detail = lessionInfoService.getLessionDetailPageInfoByLessionIdAndUserId(lessionId, userId);
+            detail.setName(StringEscapeUtils.unescapeHtml(detail.getName()));
             detail.setContent(StringEscapeUtils.unescapeHtml(detail.getContent()));
             detail.settContent(StringEscapeUtils.unescapeHtml(detail.gettContent()));
             detail.setCreater(teacherService.getTNameById(detail.getCreater()));
@@ -194,7 +191,7 @@ public class LessionInfoController extends BaseController {
             LessionDetailPageInfo l = lessionInfoService.getLessionDetailPageInfoByLessionIdAndUserId(lessionId,
                     userId);
             // 减轻数据传送压力
-            lession.setName(l.getName());
+            lession.setName(StringEscapeUtils.unescapeHtml(l.getName()));
             lession.setIssueTime(TimeUtils.turnFormat1(l.getIssueTime()));
             lession.setImage(l.getImage());
 

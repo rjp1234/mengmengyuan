@@ -1,14 +1,10 @@
 package com.mengmengyuan.mengmengyuan;
 
-import java.sql.DriverManager;
-import java.util.Base64;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mengmengyuan.common.util.redis.RedisUtils;
 import com.mengmengyuan.core.test.dao.TestDao;
-import com.mengmengyuan.core.test.entity.TestEntity;
 
 /**
  * 
@@ -27,25 +23,28 @@ public class TestEnvironment extends BaseTest {
 
     @org.junit.Test
     public void mysqlConnectTest() throws Exception {
-        String url = "jdbc:mysql://192.168.40.129:3306/mengmengyuan?useUnicode=true&characterEncoding=utf-8"; // 连接数据库（kucun是数据库名）
-
-        String name = "root";// 连接mysql的用户名
-
-        String pwd = "123";// 连接mysql的密码
-        Class.forName("com.mysql.jdbc.Driver");
-        java.sql.Connection conn = DriverManager.getConnection(url, name, pwd);
-        System.out.println(conn);
+        // String url =
+        // "jdbc:mysql://192.168.40.129:3306/mengmengyuan?useUnicode=true&characterEncoding=utf-8";
+        // // 连接数据库（kucun是数据库名）
+        //
+        // String name = "root";// 连接mysql的用户名
+        //
+        // String pwd = "123";// 连接mysql的密码
+        // Class.forName("com.mysql.jdbc.Driver");
+        // java.sql.Connection conn = DriverManager.getConnection(url, name,
+        // pwd);
+        // System.out.println(conn);
     }
 
     @Test
     public void mysqlInsertTest() {
-        TestEntity test = new TestEntity();
-        test.setId("123");
-        test.setName("name");
-        testDao.insert(test);
-        testDao.select(test);
-        System.out.println(testDao.select(test));
-        testDao.deleteAll();
+        // TestEntity test = new TestEntity();
+        // test.setId("123");
+        // test.setName("name");
+        // testDao.insert(test);
+        // testDao.select(test);
+        // System.out.println(testDao.select(test));
+        // testDao.deleteAll();
     }
 
     @Test
@@ -76,12 +75,5 @@ public class TestEnvironment extends BaseTest {
     //
     // }
     // }
-
-    public static void main(String[] args) {
-        System.out.println("renjianping".getBytes());
-        byte[] encode = Base64.getEncoder().encode("renjianping".getBytes());
-        System.out.println(encode);
-
-    }
 
 }

@@ -18,6 +18,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -132,7 +133,9 @@ public class StudioController extends BaseController {
             List<StudioPointRecordInfo> recordList = studioService.getUserStudioPointRecordList(userId, size, time);
             for (StudioPointRecordInfo studioPointRecordInfo : recordList) {
                 try {
-
+                    studioPointRecordInfo
+                            .setComment(StringEscapeUtils.unescapeHtml(studioPointRecordInfo.getComment()));
+                    studioPointRecordInfo.setName(StringEscapeUtils.unescapeHtml(studioPointRecordInfo.getName()));
                     studioPointRecordInfo.setCreateTime(TimeUtils.turnFormat1(studioPointRecordInfo.getCreateTime()));
                     if (StringUtils.isNotBlank(studioPointRecordInfo.getPointTime())) {
                         studioPointRecordInfo.setPointTime(TimeUtils.turnFormat1(studioPointRecordInfo.getPointTime()));
