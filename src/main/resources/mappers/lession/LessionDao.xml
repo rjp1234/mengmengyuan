@@ -35,7 +35,7 @@
 		lcb.class_id =
 		( SELECT class_id FROM `user` WHERE id = #{userId} )
 		ORDER BY
-		unit,issueTime
+		issueTime desc,unit
 		LIMIT
 		#{skip},#{limit}
 	</select>
