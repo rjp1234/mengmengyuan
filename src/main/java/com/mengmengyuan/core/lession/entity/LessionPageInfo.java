@@ -9,6 +9,8 @@
  */
 package com.mengmengyuan.core.lession.entity;
 
+import com.mengmengyuan.core.base.BaseEntity;
+
 /**
  * 
  * 项目名称：mengmengyuan 类名称：LessionPageInfo 类描述： 创建人：Administrator 创建时间：2018年6月14日
@@ -16,14 +18,15 @@ package com.mengmengyuan.core.lession.entity;
  * 
  * @version 用于返回首页面的课程列表
  */
-public class LessionPageInfo {
-    private String id;// 课文id
+public class LessionPageInfo extends BaseEntity {
 
     private String name;// 课文名称
 
     private String image;// 课文封面
 
     private String issueTime;// 下发时间
+
+    private int unit;// 所属单元
 
     private int readNum;// 总朗读人数
 
@@ -35,9 +38,49 @@ public class LessionPageInfo {
 
     private int completeNum;// 完成人数
 
+    private String userId;// 用户id
+
     public static final int STATE_COMPLETE = 1;
 
     public static final int STATE_UNFINISHED = 0;
+
+    /**
+     * userId
+     * 
+     * @return the userId
+     * @since CodingExample Ver(编码范例查看) 1.0
+     */
+
+    public String getUserId() {
+        return userId;
+    }
+
+    /**
+     * @param userId
+     *            the userId to set
+     */
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    /**
+     * unit
+     * 
+     * @return the unit
+     * @since CodingExample Ver(编码范例查看) 1.0
+     */
+
+    public int getUnit() {
+        return unit;
+    }
+
+    /**
+     * @param unit
+     *            the unit to set
+     */
+    public void setUnit(int unit) {
+        this.unit = unit;
+    }
 
     public int getCompleteNum() {
         return completeNum;
@@ -61,14 +104,6 @@ public class LessionPageInfo {
 
     public void setReadState(boolean readState) {
         this.readState = readState;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {

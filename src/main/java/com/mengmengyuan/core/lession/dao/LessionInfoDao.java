@@ -16,6 +16,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.mengmengyuan.core.base.BaseDao;
 import com.mengmengyuan.core.lession.entity.LessionDetailPageInfo;
 import com.mengmengyuan.core.lession.entity.LessionInfo;
+import com.mengmengyuan.core.lession.entity.LessionPageInfo;
 
 /**
  * 
@@ -33,14 +34,14 @@ public interface LessionInfoDao extends BaseDao<LessionInfo> {
      * getList(这里用一句话描述这个方法的作用)
      * 
      */
-    List<LessionInfo> getList(LessionInfo lession);
+    List<LessionPageInfo> getList(LessionPageInfo lession);
 
     /**
      * 
      * countLession(这里用一句话描述这个方法的作用)
      * 
      */
-    int countLession(LessionInfo lession);
+    int countLession(LessionPageInfo lession);
 
     /**
      * 

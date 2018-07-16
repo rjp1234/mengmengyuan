@@ -1,25 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mengmengyuan.core.lession.dao.LessionInfoDao">
-	<select id="getList" resultType="com.mengmengyuan.core.lession.entity.LessionInfo">
+	<select id="getList"
+		resultType="com.mengmengyuan.core.lession.entity.LessionPageInfo">
 		SELECT
-		*
+		li.id,
+		li.NAME as name,
+		li.image,
+		( SELECT count( 1 )
+		FROM studio_info si WHERE si.lession_id = li.id AND
+		del_flag
+		=#{DEL_FLAG_NORMAL} ) AS reciteNum,
+		(
+		CASE
+		WHEN ( SELECT count( 1 ) FROM
+		studio_info WHERE user_id = #{userId} AND del_flag
+		= #{DEL_FLAG_NORMAL}
+		AND lession_id = li.id ) = 0 THEN
+		FALSE ELSE TRUE
+		END
+		) AS reciteState ,
+		(select count(1) from studio_info where lession_id=li.id and
+		del_flag=#{DEL_FLAG_NORMAL}) as
+		completeNum,
+		lcb.create_time as
+		issueTime,
+		li.unit as unit
 		FROM
-		lession_info
+		lession_class_bind lcb
+		JOIN lession_info li ON li.id =
+		lcb.lession_id
+		AND li.del_flag = #{DEL_FLAG_NORMAL}
 		WHERE
-		id
-		IN (
-		SELECT
-		lession_id
-		FROM
-		lession_class_bind
-		WHERE
-		class_id = #{classId}
-		AND del_flag = #{DEL_FLAG_NORMAL}
-		)
+		lcb.class_id =
+		( SELECT class_id FROM `user` WHERE id = #{userId} )
 		ORDER BY
-		unit
-		LIMIT #{skip},#{limit}
+		unit,issueTime
+		LIMIT
+		#{skip},#{limit}
 	</select>
 	<select id="get" resultType="com.mengmengyuan.core.lession.entity.LessionInfo">
 		select * from lession_info where
@@ -37,8 +55,9 @@
 		FROM
 		lession_class_bind
 		WHERE
-		class_id = #{classId}
-		AND del_flag =
+		class_id = (select class_id from user where id= #{userId})
+		AND del_flag
+		=
 		#{DEL_FLAG_NORMAL}
 		)
 	</select>
@@ -49,8 +68,10 @@
 		`name`,
 		content,
 		image,
-		( SELECT count( 1 ) FROM studio_info WHERE type = 1 AND lession_id =
-		li.id AND del_flag =  #{DEL_FLAG_NORMAL}) AS completeNum,
+		( SELECT count( 1 ) FROM
+		studio_info WHERE type = 1 AND lession_id =
+		li.id AND del_flag =
+		#{DEL_FLAG_NORMAL}) AS completeNum,
 		lcb.create_time AS issueTime,
 		li.example_url AS exampleUrl,
 		li.t_studio_url AS tStudioUrl,
@@ -62,14 +83,18 @@
 		studio_info
 		WHERE
 		lession_id = #{id} and user_id=#{userId} and
-		del_flag=#{DEL_FLAG_NORMAL}) &gt; 0) as reciteState , li.creater as creater
+		del_flag=#{DEL_FLAG_NORMAL}) &gt; 0) as reciteState , li.creater as
+		creater
 
 		FROM
 		lession_info li
-		JOIN lession_class_bind lcb ON lcb.lession_id =
-		li.id AND lcb.class_id=(select class_id from user where id=#{userId} and del_flag=#{DEL_FLAG_NORMAL})
+		JOIN lession_class_bind lcb ON
+		lcb.lession_id =
+		li.id AND lcb.class_id=(select class_id from user
+		where id=#{userId} and del_flag=#{DEL_FLAG_NORMAL})
 		WHERE
-		li.del_flag = #{DEL_FLAG_NORMAL} AND lcb.del_flag=#{DEL_FLAG_NORMAL}
+		li.del_flag =
+		#{DEL_FLAG_NORMAL} AND lcb.del_flag=#{DEL_FLAG_NORMAL}
 		AND li.id=#{id}
 
 	</select>

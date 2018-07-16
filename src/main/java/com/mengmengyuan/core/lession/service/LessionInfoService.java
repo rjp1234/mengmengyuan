@@ -18,6 +18,7 @@ import com.mengmengyuan.core.base.BaseService;
 import com.mengmengyuan.core.lession.dao.LessionInfoDao;
 import com.mengmengyuan.core.lession.entity.LessionDetailPageInfo;
 import com.mengmengyuan.core.lession.entity.LessionInfo;
+import com.mengmengyuan.core.lession.entity.LessionPageInfo;
 
 /**
  * 
@@ -39,13 +40,13 @@ public class LessionInfoService extends BaseService {
      * 
      * 
      */
-    public List<LessionInfo> getPage(String classId, int pageNo, int pageSize) {
+    public List<LessionPageInfo> getPage(String userId, int pageNo, int pageSize) {
         int limit = pageSize;
         int skip = (pageNo - 1) * pageSize;
-        LessionInfo lession = new LessionInfo();
+        LessionPageInfo lession = new LessionPageInfo();
         lession.setLimit(limit);
         lession.setSkip(skip);
-        lession.setClassId(classId);// 设置课文被下发的班级
+        lession.setUserId(userId);
         return lessionDao.getList(lession);
     }
 
@@ -66,9 +67,10 @@ public class LessionInfoService extends BaseService {
      * countLession(这里用一句话描述这个方法的作用)
      * 
      */
-    public int countLession(String classId) {
-        LessionInfo lession = new LessionInfo();
-        lession.setClassId(classId);
+    public int countLession(String userId) {
+        LessionPageInfo lession = new LessionPageInfo();
+        lession.setUserId(userId);
+
         return lessionDao.countLession(lession);
     }
 

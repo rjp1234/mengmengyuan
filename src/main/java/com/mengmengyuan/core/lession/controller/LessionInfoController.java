@@ -30,14 +30,12 @@ import com.mengmengyuan.core.base.ApiResponse;
 import com.mengmengyuan.core.base.BaseController;
 import com.mengmengyuan.core.base.teacher.service.TeacherService;
 import com.mengmengyuan.core.lession.entity.LessionDetailPageInfo;
-import com.mengmengyuan.core.lession.entity.LessionInfo;
 import com.mengmengyuan.core.lession.entity.LessionPageInfo;
 import com.mengmengyuan.core.lession.service.LessionClassBindService;
 import com.mengmengyuan.core.lession.service.LessionInfoService;
 import com.mengmengyuan.core.studio.entity.LessionRankingPageInfo;
 import com.mengmengyuan.core.studio.entity.StudioInfo;
 import com.mengmengyuan.core.studio.service.StudioInfoService;
-import com.mengmengyuan.core.user.entity.UserInfo;
 import com.mengmengyuan.core.user.service.UserInfoService;
 
 /**
@@ -75,23 +73,12 @@ public class LessionInfoController extends BaseController {
         String userId = request.getParameter("userId");
         String pageNoStr = request.getParameter("pageNo");
         String pageSizeStr = request.getParameter("pageSize");
-        List<LessionInfo> lessionList = new ArrayList<LessionInfo>();
+        List<LessionPageInfo> lessionList = new ArrayList<LessionPageInfo>();
         int pageNo = PAGE_NO;
         int pageSize = PAGE_SIZE;
-        String classId = null;
-        UserInfo user = new UserInfo();
-        try {
-            user = userService.getById(userId);
-            classId = user.getClassId();
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-        List<LessionPageInfo> pageList = new ArrayList<LessionPageInfo>();
         Map<String, Object> data = new HashMap<String, Object>();
-        data.put("lessionList", pageList);
         // 用户未和班级绑定，获取不到课文列表，返回空列表
-        if (StringUtils.isBlank(classId)) {
-            logger.error("userId:" + user.getId() + "has no classId");
+        if (StringUtils.isBlank(userId)) {
             return ApiResponse.successMessage(data);
         }
         // 对分页条件进行处理
@@ -101,26 +88,18 @@ public class LessionInfoController extends BaseController {
         }
         // 获取课程列表
         try {
-            lessionList = lessionInfoService.getPage(classId, pageNo, pageSize);
+            lessionList = lessionInfoService.getPage(userId, pageNo, pageSize);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
         // 组装返回页面的对象
-        for (LessionInfo lession : lessionList) {
-            LessionPageInfo lessionPage = new LessionPageInfo();
-            lessionPage.setId(lession.getId());
-            lessionPage.setImage(lession.getImage());
-            lessionPage.setName(StringEscapeUtils.unescapeHtml(lession.getName()));
-            lessionPage.setReciteNum(studioService.countStudio(null, lession.getId(), StudioInfo.TYPE_RECITE));// 获取课文总背诵次数
-            lessionPage.setReciteState(studioService.countStudio(userId, lession.getId(), StudioInfo.TYPE_RECITE) > 0);
-            lessionPage.setCompleteNum(studioService.countComplete(lession.getId()));
-            String issueTime = bindService.get(lession.getId(), classId).getCreateTime();
-            int start = issueTime.indexOf(".");
-            lessionPage.setIssueTime(issueTime.substring(0, start));
-            pageList.add(lessionPage);
+        for (LessionPageInfo lession : lessionList) {
+            lession.setName(StringEscapeUtils.unescapeHtml(lession.getName()));
+            lession.setIssueTime(TimeUtils.turnFormat1(lession.getIssueTime()));
         }
+        data.put("lessionList", lessionList);
         // 获取课文总数
-        int total = lessionInfoService.countLession(classId);
+        int total = lessionInfoService.countLession(userId);
         data.put("total", total);
 
         return ApiResponse.successMessage(data);
