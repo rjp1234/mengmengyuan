@@ -146,7 +146,11 @@ public class StudioController extends BaseController {
             }
 
             data.put("recordList", recordList);
-            data.put("time", recordList.get(recordList.size() - 1).getCreateTime());
+            if (recordList.size() > 0) {
+                data.put("time", recordList.get(recordList.size() - 1).getCreateTime());
+            } else {
+                data.put("time", "");
+            }
 
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
