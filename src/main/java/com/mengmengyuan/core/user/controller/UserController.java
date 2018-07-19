@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mengmengyuan.common.ReturnConstants;
-import com.mengmengyuan.common.ThreadPool;
 import com.mengmengyuan.common.util.TimeUtils;
 import com.mengmengyuan.core.base.ApiResponse;
 import com.mengmengyuan.core.base.BaseController;
@@ -85,23 +84,21 @@ public class UserController extends BaseController {
          * 用户昵称及头像比对，若不为空且不同与本地，则将新的数据同步至数据库中
          */
         if (StringUtils.isNotBlank(nickname) && !nickname.equals(userInfo.getNickname())) {
-            ThreadPool.getInstance().execute(() -> {
-                try {
-                    userInfoService.updateUserNick(userInfo.getId(), nickname);
-                } catch (Exception e) {
-                    logger.error(e.getMessage(), e);
-                }
-            });
+
+            try {
+                userInfoService.updateUserNick(userInfo.getId(), nickname);
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+            }
+
         }
 
         if (StringUtils.isNotBlank(image) && !image.equals(userInfo.getImage())) {
-            ThreadPool.getInstance().execute(() -> {
-                try {
-                    userInfoService.updateImage(userInfo.getId(), image);
-                } catch (Exception e) {
-                    logger.error(e.getMessage(), e);
-                }
-            });
+            try {
+                userInfoService.updateImage(userInfo.getId(), image);
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+            }
 
         }
 
