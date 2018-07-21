@@ -43,7 +43,8 @@
 		#{userId},
 		#{lessionId},
 		#{type}
-		from dual where not exists (select user_id,lession_id from studio_info
+		from
+		dual where not exists (select user_id,lession_id from studio_info
 		where user_id=#{userId} and lession_id=#{lessionId} and
 		del_flag=#{DEL_FLAG_NORMAL})
 	</insert>
@@ -96,11 +97,14 @@
 		studio_info si
 		JOIN lession_info li
 		ON li.id = si.lession_id
-		WHERE
-		si.del_flag = #{DEL_FLAG_NORMAL}
-		AND
-		li.del_flag = #{DEL_FLAG_NORMAL} AND si.create_time &gt;#{createTime}
-		AND si.user_id=#{userId}
+		<where>
+			si.del_flag = #{DEL_FLAG_NORMAL}
+			AND
+			li.del_flag = #{DEL_FLAG_NORMAL}
+			AND si.user_id=#{userId}
+			<if test="createTime!=null and createTime !=''">
+				AND si.create_time &lt;#{createTime}</if>
+		</where>
 		order by si.create_time desc limit 0, #{size}
 	</select>
 	<select id="getLessionRankingPageList" resultType="LessionRankingPageInfo">
@@ -122,9 +126,11 @@
 		#{DEL_FLAG_NORMAL}
 		AND pointer IS NOT NULL AND
 		li.id=#{lessionId} AND
-		u.id in (select id from user where class_id=(select class_id from user where id=#{userId}))
+		u.id in (select id from user where
+		class_id=(select class_id from user where id=#{userId}))
 		ORDER BY
-		point DESC,
+		point
+		DESC,
 		si.create_time
 		ASC LIMIT 0,10
 	</select>
