@@ -1,6 +1,74 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mengmengyuan.core.lession.dao.LessionInfoDao">
+<!-- 以下为游客模式使用的dao方法 start -->
+	<select id="getLessionDetailPageInfoByLessionId" resultType="LessionDetailPageInfo">
+		SELECT
+		li.id,
+		`name`,
+		content,
+		image,
+		( SELECT count( 1 ) FROM
+		studio_info
+		WHERE type = 1 AND lession_id =
+		li.id AND del_flag =
+		#{DEL_FLAG_NORMAL}) AS completeNum,
+		lcb.create_time AS issueTime,
+		li.example_url AS exampleUrl,
+		li.t_studio_url AS tStudioUrl,
+		li.t_content AS tContent,
+		false as reciteState ,
+		li.creater as
+		creater
+		FROM
+		lession_info li
+		JOIN lession_class_bind lcb ON
+		lcb.lession_id =
+		li.id 
+		WHERE
+		li.del_flag =
+		#{DEL_FLAG_NORMAL} AND lcb.del_flag=#{DEL_FLAG_NORMAL}
+		AND li.id=#{id}
+
+	</select>
+	<select id="getTouristList">
+		SELECT
+		li.id,
+		li.NAME as name,
+		li.image,
+		( SELECT count(
+		1 )
+		FROM studio_info si
+		WHERE si.lession_id = li.id AND
+		del_flag
+		=#{DEL_FLAG_NORMAL} ) AS
+		reciteNum,
+		false AS reciteState ,
+		(select
+		count(1) from studio_info where
+		lession_id=li.id and
+		del_flag=#{DEL_FLAG_NORMAL}) as
+		completeNum,
+		lcb.create_time as
+		issueTime,
+		li.unit as unit
+		FROM
+		lession_class_bind lcb
+		JOIN lession_info
+		li ON li.id =
+		lcb.lession_id
+		AND li.del_flag =
+		#{DEL_FLAG_NORMAL}
+		WHERE
+		lcb.class_id =
+		#{classId}
+		ORDER BY
+		issueTime
+		desc
+		LIMIT
+		#{skip},#{limit}
+	</select>
+	<!-- 游客模式end -->
 	<select id="getList"
 		resultType="com.mengmengyuan.core.lession.entity.LessionPageInfo">
 		SELECT
@@ -28,14 +96,15 @@
 		li.unit as unit
 		FROM
 		lession_class_bind lcb
-		JOIN lession_info li ON li.id =
+		JOIN lession_info
+		li ON li.id =
 		lcb.lession_id
 		AND li.del_flag = #{DEL_FLAG_NORMAL}
 		WHERE
 		lcb.class_id =
 		( SELECT class_id FROM `user` WHERE id = #{userId} )
 		ORDER BY
-		issueTime desc,unit
+		issueTime desc
 		LIMIT
 		#{skip},#{limit}
 	</select>
@@ -43,24 +112,7 @@
 		select * from lession_info where
 		id=#{id} and del_flag = #{DEL_FLAG_NORMAL}
 	</select>
-	<select id="countLession" resultType="int">
-		SELECT
-		count(1)
-		FROM
-		lession_info
-		WHERE
-		id IN (
-		SELECT
-		lession_id
-		FROM
-		lession_class_bind
-		WHERE
-		class_id = (select class_id from user where id= #{userId})
-		AND del_flag
-		=
-		#{DEL_FLAG_NORMAL}
-		)
-	</select>
+
 	<select id="getLessionDetailPageInfoByLessionIdAndUserId"
 		resultType="LessionDetailPageInfo">
 		SELECT

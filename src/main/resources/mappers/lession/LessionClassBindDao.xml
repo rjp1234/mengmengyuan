@@ -1,7 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mengmengyuan.core.lession.dao.LessionClassBindDao">
-	<select id="get" resultType="com.mengmengyuan.core.lession.entity.LessionClassBindInfo">
-		select * from lession_class_bind where class_id=#{classId} and lession_id=#{lessionId} and del_flag = #{DEL_FLAG_NORMAL}
+	<select id="get"
+		resultType="com.mengmengyuan.core.lession.entity.LessionClassBindInfo">
+		select * from lession_class_bind where class_id=#{classId}
+		and lession_id=#{lessionId} and del_flag = #{DEL_FLAG_NORMAL}
+	</select>
+	<select id="getMaxIssueClass">
+		SELECT class_id
+		FROM lession_class_bind
+		GROUP BY
+		class_id
+		ORDER BY count( 1 ) DESC
+		LIMIT 0,1
+	</select>
+		<select id="countLession" resultType="int">
+		SELECT
+		count(1)
+		FROM
+		lession_class_bind
+		WHERE
+		class_id = (select class_id from `user` where
+		id= #{userId})
+		AND del_flag
+		=
+		#{DEL_FLAG_NORMAL}
+	</select>
+	<select id="countTouristLession" resultType="int">
+		SELECT
+		count(1)
+		FROM
+		lession_class_bind
+		WHERE
+		class_id = #{classId}
+		AND del_flag
+		=
+		#{DEL_FLAG_NORMAL}
 	</select>
 </mapper>

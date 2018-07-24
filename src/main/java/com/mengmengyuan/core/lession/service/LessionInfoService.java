@@ -64,18 +64,6 @@ public class LessionInfoService extends BaseService {
 
     /**
      * 
-     * countLession(这里用一句话描述这个方法的作用)
-     * 
-     */
-    public int countLession(String userId) {
-        LessionPageInfo lession = new LessionPageInfo();
-        lession.setUserId(userId);
-
-        return lessionDao.countLession(lession);
-    }
-
-    /**
-     * 
      * getLessionDetailPageInfoByLessionIdAndUserId(获取某用户课程详情页面)
      * 
      * @since CodingExample Ver(编码范例查看) 1.1
@@ -86,6 +74,35 @@ public class LessionInfoService extends BaseService {
         detail.setId(lessionId);
         detail.setUserId(userId);
         return lessionDao.getLessionDetailPageInfoByLessionIdAndUserId(detail);
+    }
+
+    /**
+     * 
+     * getTouristPage(游客查看方法)
+     * 
+     * 
+     * 
+     */
+    public List<LessionPageInfo> getTouristPage(String classId, int pageNo, int pageSize) {
+        int limit = pageSize;
+        int skip = (pageNo - 1) * pageSize;
+        LessionPageInfo lession = new LessionPageInfo();
+        lession.setLimit(limit);
+        lession.setSkip(skip);
+        lession.setClassId(classId);
+        return lessionDao.getTouristList(lession);
+    }
+
+    /**
+     * 
+     * getLessionDetailPageInfoByLessionId(这里用一句话描述这个方法的作用)
+     * 根据lessionId获取对应的课文详情，仅在游客模式使用
+     * 
+     */
+    public LessionDetailPageInfo getLessionDetailPageInfoByLessionId(String lessionId) {
+        LessionDetailPageInfo detail = new LessionDetailPageInfo();
+        detail.setId(lessionId);
+        return lessionDao.getLessionDetailPageInfoByLessionId(detail);
     }
 
 }

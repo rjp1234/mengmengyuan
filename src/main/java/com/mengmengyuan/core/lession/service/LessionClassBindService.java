@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.mengmengyuan.core.base.BaseService;
 import com.mengmengyuan.core.lession.dao.LessionClassBindDao;
 import com.mengmengyuan.core.lession.entity.LessionClassBindInfo;
+import com.mengmengyuan.core.lession.entity.LessionPageInfo;
 
 /**
  * 
@@ -35,4 +36,39 @@ public class LessionClassBindService extends BaseService {
         bind.setLessionId(lessionId);
         return dao.get(bind);
     }
+
+    /**
+     * 
+     * getMaxIssueClass(获取当前下发课文最多的那个班级)
+     * 
+     * 
+     */
+    public String getMaxIssueClass() {
+        return dao.getMaxIssueClass();
+    }
+
+    /**
+     * 
+     * countTouristLession(游客模式使用，查看游客当前浏览的班级全部下发课文的总数)
+     * 
+     * 
+     */
+    public int countTouristLession(String classId) {
+        LessionPageInfo lession = new LessionPageInfo();
+        lession.setClassId(classId);
+        return dao.countTouristLession(lession);
+    }
+
+    /**
+     * 
+     * countLession(根据用户id去查该用户所在班级下发的课文总数)
+     * 
+     */
+    public int countLession(String userId) {
+        LessionPageInfo lession = new LessionPageInfo();
+        lession.setUserId(userId);
+
+        return dao.countLession(lession);
+    }
+
 }

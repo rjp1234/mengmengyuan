@@ -40,9 +40,19 @@ public class LessionPageInfo extends BaseEntity {
 
     private String userId;// 用户id
 
+    private String classId;
+
     public static final int STATE_COMPLETE = 1;
 
     public static final int STATE_UNFINISHED = 0;
+
+    public String getClassId() {
+        return classId;
+    }
+
+    public void setClassId(String classId) {
+        this.classId = classId;
+    }
 
     /**
      * userId

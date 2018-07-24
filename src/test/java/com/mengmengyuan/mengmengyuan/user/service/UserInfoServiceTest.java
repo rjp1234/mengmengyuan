@@ -20,7 +20,7 @@ import com.mengmengyuan.common.util.IdGen;
 import com.mengmengyuan.common.util.MD5Utils;
 import com.mengmengyuan.common.util.TimeUtils;
 import com.mengmengyuan.common.util.redis.RedisUtils;
-import com.mengmengyuan.core.lession.entity.LessionInfo;
+import com.mengmengyuan.core.lession.entity.LessionPageInfo;
 import com.mengmengyuan.core.lession.service.LessionInfoService;
 import com.mengmengyuan.core.studio.entity.StudioInfo;
 import com.mengmengyuan.core.studio.service.StudioInfoService;
@@ -101,11 +101,11 @@ public class UserInfoServiceTest extends BaseTest {
 
     @Test
     public void insertStudio() {
-        String classId = "6fca230ed6b646059e7b5125e7c3d020";
+        String classId = "7308f85e253b45f6bde93ae5d1988bae";
         List<UserInfo> list = userService.getByClassId(classId);
         for (UserInfo userInfo : list) {
-            List<LessionInfo> lessionList = lessionService.getPage(userInfo.getClassId(), 1, 100);
-            for (LessionInfo lessionInfo : lessionList) {
+            List<LessionPageInfo> lessionList = lessionService.getPage(userInfo.getId(), 1, 100);
+            for (LessionPageInfo lessionInfo : lessionList) {
                 StudioInfo studio = new StudioInfo();
                 studio.setId(IdGen.uuid());
                 studio.setLessionId(lessionInfo.getId());
@@ -114,7 +114,14 @@ public class UserInfoServiceTest extends BaseTest {
                         "http://pa5vtka0q.bkt.clouddn.com/student/studio/2018/6/27/12fcbbed6c9844f18e560ef022468418.mp3");
                 studio.setType("1");
                 studio.setUserId(userInfo.getId());
-                // studioService.insert(studio);
+                try {
+                    int i = studioService.insert(studio);
+                    if (i != 1) {
+                        System.out.println(i);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
 

@@ -58,6 +58,7 @@ public class AdminSecurityConfig implements WebMvcConfigurer {
         addInterceptor.excludePathPatterns("/error");
         addInterceptor.excludePathPatterns("/user/login");
         addInterceptor.excludePathPatterns("/studio/uploadStudio");
+        addInterceptor.excludePathPatterns("/touristLession/*");
         // 拦截所有路径
         addInterceptor.addPathPatterns("/**");
     }

@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.mengmengyuan.core.base.BaseDao;
 import com.mengmengyuan.core.lession.entity.LessionClassBindInfo;
+import com.mengmengyuan.core.lession.entity.LessionPageInfo;
 
 /**
  * 
@@ -24,5 +25,27 @@ import com.mengmengyuan.core.lession.entity.LessionClassBindInfo;
  */
 @Mapper
 public interface LessionClassBindDao extends BaseDao<LessionClassBindInfo> {
+
+    /**
+     * 
+     * getMaxIssueClass(获取课文下发最多的那个班级的classId)
+     * 
+     * 
+     */
+    String getMaxIssueClass();
+
+    /**
+     * 
+     * countTouristLession(计算游客当前浏览的班级的课文总数)
+     * 
+     */
+    int countTouristLession(LessionPageInfo lession);
+
+    /**
+     * 
+     * countLession(这里用一句话描述这个方法的作用)
+     * 
+     */
+    int countLession(LessionPageInfo lession);
 
 }

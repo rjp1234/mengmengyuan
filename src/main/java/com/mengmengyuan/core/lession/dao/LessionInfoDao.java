@@ -38,16 +38,23 @@ public interface LessionInfoDao extends BaseDao<LessionInfo> {
 
     /**
      * 
-     * countLession(这里用一句话描述这个方法的作用)
-     * 
-     */
-    int countLession(LessionPageInfo lession);
-
-    /**
-     * 
      * getLessionDetailPageInfoByLessionIdAndUserId(这里用一句话描述这个方法的作用)
      * 
      */
     LessionDetailPageInfo getLessionDetailPageInfoByLessionIdAndUserId(LessionDetailPageInfo detail);
+
+    /**
+     * 
+     * getTouristList(根据班级获取课文的方法，用于游客访问)
+     * 
+     * 
+     */
+    List<LessionPageInfo> getTouristList(LessionPageInfo lession);
+
+    /**
+     * 
+     * getLessionDetailPageInfoByLessionId(根据课文id获取课文详情 仅在游客模式下使用)
+     */
+    LessionDetailPageInfo getLessionDetailPageInfoByLessionId(LessionDetailPageInfo detail);
 
 }
