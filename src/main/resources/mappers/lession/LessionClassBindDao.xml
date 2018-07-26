@@ -6,7 +6,7 @@
 		select * from lession_class_bind where class_id=#{classId}
 		and lession_id=#{lessionId} and del_flag = #{DEL_FLAG_NORMAL}
 	</select>
-	<select id="getMaxIssueClass">
+	<select id="getMaxIssueClass" resultType="string">
 		SELECT class_id
 		FROM lession_class_bind
 		GROUP BY

@@ -29,9 +29,9 @@
 		li.del_flag =
 		#{DEL_FLAG_NORMAL} AND lcb.del_flag=#{DEL_FLAG_NORMAL}
 		AND li.id=#{id}
-
+		LIMIT 0,1
 	</select>
-	<select id="getTouristList">
+	<select id="getTouristList" resultType="com.mengmengyuan.core.lession.entity.LessionPageInfo">
 		SELECT
 		li.id,
 		li.NAME as name,
