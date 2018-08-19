@@ -31,11 +31,11 @@ public class TimeUtils {
 
     static SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    static SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd");
+    static SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM");
 
     /**
      * 
-     * formatNowDay(yyyy-MM-dd 返回当前日期)
+     * formatNowDay(yyyy-MM 返回当前日期)
      * 
      */
     public static String formatNowDay() {
